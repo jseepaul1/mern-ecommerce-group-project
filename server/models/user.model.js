@@ -23,6 +23,64 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       minLength: [8, "Password must be at least 8 characters"],
     },
+    shippingAddress: {
+      street: {
+        type: String,
+        required: [true, "Street number is required"],
+        minLength: [3, "Street cannot be less than 3 characters"],
+      },
+      city: {
+        type: String,
+        required: [true, "City is required"],
+        minLength: [3, "City cannot be less than 3 characters"],
+      },
+      state: {
+        type: String,
+        required: [true, "State is required"],
+        minLength: [2, "State cannot be less than 2 characters"],
+      },
+      zipCode: {
+        type: String,
+        required: [true, "Zip code is required"],
+        validate: {
+          validator: function (val) {
+            return val.toString().length === 5;
+          },
+          message: (val) => `${val.value} has to be 5 digits`,
+        },
+      },
+      phoneNumber: {
+        type: String,
+        required: [true, "Phone Number is required"],
+        validate: {
+          validator: function (val) {
+            return val.toString().length === 10;
+          },
+          message: (val) => `${val.value} has to be 10 digits`,
+        },
+      },
+    },
+    billingInformation: {
+      fullName: {
+        type: String,
+        required: [true, "Name is required"],
+        minLength: [4, "Name cannot be less than 4 characters"],
+      },
+      cardNumber: {
+        type: String,
+        required: [true, "Card Number is required"],
+        validate: {
+          validator: function (val) {
+            return val.toString().length === 16;
+          },
+          message: (val) => `${val.value} has to be 16 digits`,
+        },
+      },
+      expirationDate: {
+        type: Date,
+        required: [true, "Expiration Date is required"],
+      },
+    },
     isAdmin: {
       type: Boolean,
       required: true,
