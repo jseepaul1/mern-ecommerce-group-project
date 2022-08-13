@@ -75,7 +75,6 @@ const logout = (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    jwt.verify(req.cookies.userToken, SECRET);
     const currentUser = await User.findById(req.params.id);
     const { email, firstName, lastName, shippingAddress, billingInformation } = req.body;
     currentUser.email = email || currentUser.email;
@@ -102,8 +101,7 @@ const updateUser = async (req, res) => {
 
 const getLoggedInUser = async (req, res) => {
   try {
-    const user = jwt.verify(req.cookies.userToken, SECRET);
-    const currentUser = await User.findOne({ _id: user._id });
+    const currentUser = await User.findOne({ _id: req.user._id });
     res.json(currentUser);
   } catch (error) {
     res.status(401).json({ error });
