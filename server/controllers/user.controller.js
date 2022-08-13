@@ -73,6 +73,33 @@ const logout = (req, res) => {
   res.json({ successMessage: "User logged out" });
 };
 
+const updateUser = async (req, res) => {
+  try {
+    jwt.verify(req.cookies.userToken, SECRET);
+    const currentUser = await User.findById(req.params.id);
+    const { email, firstName, lastName, shippingAddress, billingInformation } = req.body;
+    currentUser.email = email || currentUser.email;
+    currentUser.firstName = firstName || currentUser.firstName;
+    currentUser.lastName = lastName || currentUser.lastName;
+    currentUser.shippingAddress =
+      shippingAddress || currentUser.shippingAddress;
+    currentUser.billingInformation =
+      billingInformation || currentUser.billingInformation;
+    console.log('currentUser - ', currentUser);
+    await User.findByIdAndUpdate(
+      currentUser.id,
+      {
+        ...currentUser,
+      },
+      { runValidators: true }
+    );
+    res.status(200).json({ currentUser });
+  } catch (error) {
+    console.log("Error in updating user ", error);
+    res.status(400).json(error);
+  }
+};
+
 const getLoggedInUser = async (req, res) => {
   try {
     const user = jwt.verify(req.cookies.userToken, SECRET);
@@ -88,4 +115,5 @@ module.exports = {
   login,
   logout,
   getLoggedInUser,
+  updateUser,
 };
