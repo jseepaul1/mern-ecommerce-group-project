@@ -20,6 +20,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 require("./routes/user.routes")(app);
+require("./routes/product.routes")(app);
 
 app.listen(process.env.PORT, () => {
   console.log(`You are connected to port ${process.env.PORT}`);
