@@ -3,7 +3,7 @@ const { authenticateToken } = require("../middleware/authenticateToken");
 const { authenticateAdmin } = require("../middleware/authenticateAdmin");
 
 module.exports = (app) => {
-  app.get("/api/products", authenticateToken, productController.getAllProducts);
+  app.get("/api/products", productController.getAllProducts);
   app.get(
     "/api/products/:id",
     authenticateToken,
@@ -28,4 +28,3 @@ module.exports = (app) => {
     productController.deleteProduct
   );
 };
-

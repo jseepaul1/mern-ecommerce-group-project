@@ -7,7 +7,7 @@ const register = async (req, res) => {
   try {
     const user = new User(req.body);
     const newUser = await user.save();
-    console.log("New user created", newUser);
+    // console.log("New user created", newUser);
     const userToken = jwt.sign(
       { _id: newUser._id, email: newUser.email, isAdmin: newUser.isAdmin },
       SECRET
@@ -20,7 +20,7 @@ const register = async (req, res) => {
       })
       .json({ successMessage: "user created", user: newUser });
   } catch (error) {
-    console.log("Error in Registering user", error);
+    // console.log("Error in Registering user", error);
     res.status(400).json(error);
   }
 };
@@ -101,7 +101,7 @@ const updateUser = async (req, res) => {
 
 const getLoggedInUser = async (req, res) => {
   try {
-    const currentUser = await User.findOne({ _id: req.user._id });
+    const currentUser = await User.findOne({ _id: req.user._id }); 
     res.json(currentUser);
   } catch (error) {
     res.status(401).json({ error });

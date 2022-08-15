@@ -1,12 +1,11 @@
 const Product = require("../models/product.model");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const SECRET = process.env.JWT_SECRET;
+
 
 module.exports = {
   getAllProducts: async (req, res) => {
     try {
-      jwt.verify(req.cookies.userToken, SECRET);
       const findAllProducts = await Product.find({}).populate(
         "createdBy",
         "firstName lastName email"
@@ -19,13 +18,11 @@ module.exports = {
 
   createProduct: async (req, res) => {
     try {
-      const user = jwt.verify(req.cookies.userToken, SECRET);
       const newProduct = await Product.create({
         ...req.body,
-        createdBy: user._id,
+        createdBy: req.user._id,
       });
       console.log("newProduct - ", newProduct);
-      res.header("Access-Control-Allow-Origin", "http://localhost:3000");
       res.status(201).json(newProduct);
     } catch (err) {
       res.status(400).json({ message: "error in create", error: err });
@@ -34,11 +31,10 @@ module.exports = {
 
   getProductById: async (req, res) => {
     try {
-      jwt.verify(req.cookies.userToken, SECRET);
       console.log("find one id", req.params.id);
       const oneProduct = await Product.findOne({ _id: req.params.id });
       console.log("oneProduct - ", oneProduct);
-      res.status(201).json(oneProduct);
+      res.status(200).json(oneProduct);
     } catch (err) {
       res.status(400).json({ message: "error in find one", error: err });
     }
@@ -46,7 +42,6 @@ module.exports = {
 
   updateProduct: async (req, res) => {
     try {
-      jwt.verify(req.cookies.userToken, SECRET);
       const updateOneProductById = await Product.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -63,7 +58,6 @@ module.exports = {
 
   deleteProduct: async (req, res) => {
     try {
-      jwt.verify(req.cookies.userToken, SECRET);
       const deleteOneProductById = await Product.deleteOne({
         _id: req.params.id,
       });
