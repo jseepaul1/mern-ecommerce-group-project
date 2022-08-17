@@ -1,5 +1,4 @@
 const Product = require("../models/product.model");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 

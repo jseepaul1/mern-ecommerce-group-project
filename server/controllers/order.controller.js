@@ -1,7 +1,6 @@
 const Order = require("../models/order.model");
-const jwt = require("jsonwebtoken");
+const { deleteCartItemsByUserId } = require("./cart-item.controller");
 require("dotenv").config();
-
 
 module.exports = {
   getAllOrders: async (req, res) => {
@@ -22,6 +21,8 @@ module.exports = {
         createdBy: req.user._id,
       });
       console.log("newOrder - ", newOrder);
+      // cart items gets deleted after order is successfully created.
+      await deleteCartItemsByUserId(req.user._id);
       res.status(201).json(newOrder);
     } catch (err) {
       res.status(400).json({ message: "error in create order", error: err });
