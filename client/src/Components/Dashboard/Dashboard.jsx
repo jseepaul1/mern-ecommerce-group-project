@@ -8,7 +8,7 @@ const Dashboard = () => {
     const handleLogout= (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:3000/api/users/logout', { withCredentials: true }) 
+            .post('http://localhost:8000/api/users/logout', { withCredentials: true }) 
             .then((res) => {
                 console.log(res);
                 navigate('/')
