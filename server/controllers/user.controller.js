@@ -42,7 +42,7 @@ const login = async (req, res) => {
         // isAdmin is default to false
       } else {
         if (isAdminLogin && !userDocument.isAdmin) {
-          res.status(401).json({ message: "User is not an admin" });
+          res.status(401).json({ error: "User is not an admin" });
         } else {
           const userToken = jwt.sign(
             {

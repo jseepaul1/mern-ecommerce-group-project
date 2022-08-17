@@ -28,7 +28,7 @@ const AdminLoginForm = () => {
       .catch((err) => {
         console.log("Error in login", err);
         console.log("error response", err.response);
-        console.log("error response data errors", err.response.data.message);
+        console.log("error response data errors", err.response.data.error);
         setErrorMessage(err.response.data.error);
       });
   };
