@@ -1,5 +1,3 @@
-const jwt = require("jsonwebtoken");
-
 module.exports = {
   authenticateAdmin(req, res, next) {
     if (req.user && req.user.isAdmin === true) {

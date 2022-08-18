@@ -1,11 +1,18 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Component imports
 import LoginAndRegistration from "./Components/LoginAndRegistration/LoginAndRegistration";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import AdminLoginForm from "./Components/AdminLoginForm/AdminLoginForm";
-import AdminDashboard from "./pages/AdminDashboard";
-import ProductForm from "./Components/AdminLoginForm/ProductForm";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import DisplayProduct from "./Components/DisplayProduct/DisplayProduct";
+import ProtectedAdminRoute from "./Components/ProtectedRoute/ProtectedAdminRoute";
+
+// page imports
+import AdminDashboard from "./pages/AdminDashboard";
+import CreateProduct from "./pages/CreateProduct";
+import UpdateProduct from "./pages/UpdateProduct";
 
 function App() {
   return (
@@ -13,11 +20,53 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/admin" element={<AdminLoginForm />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/product/new" element={<ProductForm />} />
-          <Route path="/product/:id" element={<DisplayProduct />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <ProtectedAdminRoute>
+                  <AdminDashboard />
+                </ProtectedAdminRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/product/new"
+            element={
+              <ProtectedRoute>
+                <ProtectedAdminRoute>
+                  <CreateProduct />
+                </ProtectedAdminRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/product/edit/:id"
+            element={
+              <ProtectedRoute>
+              <ProtectedAdminRoute>
+                <UpdateProduct />
+                </ProtectedAdminRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/product/:id"
+            element={
+              <ProtectedRoute>
+                <DisplayProduct />{" "}
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<LoginAndRegistration />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>

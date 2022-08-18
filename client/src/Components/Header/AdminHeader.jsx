@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Header.css";
 
-const Header = () => {
+const AdminHeader = () => {
   const [user, setUser] = useState([]);
   const navigate = useNavigate("");
 
@@ -53,8 +53,8 @@ const Header = () => {
               </Link>
             </div>
             <div className="mx-3">
-              <Link to="/company">
-                <Navbar.Text>Company</Navbar.Text>
+              <Link to="/product/new">
+                <Navbar.Text>Add Product</Navbar.Text>
               </Link>
             </div>
           </Nav>
@@ -62,7 +62,7 @@ const Header = () => {
         <NavbarCollapse className="justify-content-end">
           <Nav className="me-5 align-items-center">
             <Navbar.Text className="me-3 ">
-              Signed in as:{" "}
+              Admin Signed in:{" "}
               {user && (
                 <span>
                   {user.firstName} {user.lastName}
@@ -95,4 +95,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default AdminHeader;
