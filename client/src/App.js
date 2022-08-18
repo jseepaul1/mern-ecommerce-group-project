@@ -5,6 +5,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import AdminLoginForm from "./Components/AdminLoginForm/AdminLoginForm";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProductForm from "./Components/AdminLoginForm/ProductForm";
+import DisplayProduct from "./Components/DisplayProduct/DisplayProduct";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/admin" element={<AdminLoginForm />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/product/new" element={<ProductForm />} />
+          <Route path="/product/:id" element={<DisplayProduct />} />
           <Route path="/" element={<LoginAndRegistration />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
