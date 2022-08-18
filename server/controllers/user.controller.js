@@ -16,7 +16,7 @@ const register = async (req, res) => {
     res
       .status(201)
       .cookie("userToken", userToken, {
-        expires: new Date(Date.now() + 500000),
+        expires: new Date(Date.now() + 900000),
       })
       .json({ successMessage: "user created", user: newUser });
   } catch (error) {
@@ -56,7 +56,7 @@ const login = async (req, res) => {
           res
             .status(201)
             .cookie("userToken", userToken, {
-              expires: new Date(Date.now() + 500000),
+              expires: new Date(Date.now() + 900000),
             })
             .json({ successMessage: "user logged in", user: userDocument });
         }

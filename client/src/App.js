@@ -5,6 +5,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import AdminLoginForm from "./Components/AdminLoginForm/AdminLoginForm";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProductForm from "./Components/AdminLoginForm/ProductForm";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
@@ -12,8 +13,22 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/admin" element={<AdminLoginForm />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/product/new" element={<ProductForm />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/product/new"
+            element={
+              <ProtectedRoute>
+                <ProductForm />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<LoginAndRegistration />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
