@@ -1,12 +1,18 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Component imports
 import LoginAndRegistration from "./Components/LoginAndRegistration/LoginAndRegistration";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import AdminLoginForm from "./Components/AdminLoginForm/AdminLoginForm";
-import AdminDashboard from "./pages/AdminDashboard";
-import ProductForm from "./Components/AdminLoginForm/ProductForm";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import DisplayProduct from "./Components/DisplayProduct/DisplayProduct";
+import ProtectedAdminRoute from "./Components/ProtectedRoute/ProtectedAdminRoute";
+
+// page imports
+import AdminDashboard from "./pages/AdminDashboard";
+import CreateProduct from "./pages/CreateProduct";
+import UpdateProduct from "./pages/UpdateProduct";
 
 function App() {
   return (
@@ -18,7 +24,9 @@ function App() {
             path="/admin/dashboard"
             element={
               <ProtectedRoute>
-                <AdminDashboard />
+                <ProtectedAdminRoute>
+                  <AdminDashboard />
+                </ProtectedAdminRoute>
               </ProtectedRoute>
             }
           />
@@ -26,7 +34,19 @@ function App() {
             path="/product/new"
             element={
               <ProtectedRoute>
-                <ProductForm />
+                <ProtectedAdminRoute>
+                  <CreateProduct />
+                </ProtectedAdminRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/product/edit/:id"
+            element={
+              <ProtectedRoute>
+              <ProtectedAdminRoute>
+                <UpdateProduct />
+                </ProtectedAdminRoute>
               </ProtectedRoute>
             }
           />
