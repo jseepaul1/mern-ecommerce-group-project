@@ -6,6 +6,7 @@ import AdminLoginForm from "./Components/AdminLoginForm/AdminLoginForm";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProductForm from "./Components/AdminLoginForm/ProductForm";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import DisplayProduct from "./Components/DisplayProduct/DisplayProduct";
 
 function App() {
   return (
@@ -29,8 +30,23 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/product/:id"
+            element={
+              <ProtectedRoute>
+                <DisplayProduct />{" "}
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<LoginAndRegistration />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
