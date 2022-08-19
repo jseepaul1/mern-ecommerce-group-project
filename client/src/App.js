@@ -13,6 +13,8 @@ import ProtectedAdminRoute from "./Components/ProtectedRoute/ProtectedAdminRoute
 import AdminDashboard from "./pages/AdminDashboard";
 import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
+import AdminHeader from "./Components/Header/AdminHeader";
+import Header from "./Components/Header/Header";
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProtectedAdminRoute>
+                  <AdminHeader />
                   <AdminDashboard />
                 </ProtectedAdminRoute>
               </ProtectedRoute>
@@ -35,17 +38,19 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProtectedAdminRoute>
+                  <AdminHeader />
                   <CreateProduct />
                 </ProtectedAdminRoute>
               </ProtectedRoute>
             }
           />
           <Route
-            path="/product/edit/:id"
+            path="/products/edit/:id"
             element={
               <ProtectedRoute>
-              <ProtectedAdminRoute>
-                <UpdateProduct />
+                <ProtectedAdminRoute>
+                  <AdminHeader />
+                  <UpdateProduct />
                 </ProtectedAdminRoute>
               </ProtectedRoute>
             }
@@ -54,6 +59,7 @@ function App() {
             path="/product/:id"
             element={
               <ProtectedRoute>
+                <Header />
                 <DisplayProduct />{" "}
               </ProtectedRoute>
             }
@@ -63,6 +69,7 @@ function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
+                <Header />
                 <Dashboard />
               </ProtectedRoute>
             }

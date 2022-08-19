@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../Header/Header';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Dashboard.css'
@@ -20,7 +19,6 @@ const Dashboard = () => {
     
     return (
     <div>
-        <Header />
         <h1 className='container mt-5'>
             <div className='d-flex align-items-center'>
                 <div className='filterBar'>

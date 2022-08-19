@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Header from '../Header/Header';
 import './DisplayProduct.css'
 
 const DisplayProduct = () => {
@@ -23,7 +22,6 @@ const DisplayProduct = () => {
 
     return (
         <div>
-            <Header />
             <div className='container'>
                 <div>
                     {product.productName}
