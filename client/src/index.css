@@ -20,7 +20,7 @@ code {
 .form {
   display: flex;
   flex-direction: column;
-  padding: 3%;
+  padding: 2%;
   background-color: #7e7b7b;
   color: #000000;
   font-weight: 500;
@@ -51,3 +51,11 @@ code {
   border-radius: 6px;
 }
 
+.label {
+  margin-bottom: 1%;
+  margin-top: 1%;
+}
+
+.admin-table {
+  margin-top: 2%;
+}

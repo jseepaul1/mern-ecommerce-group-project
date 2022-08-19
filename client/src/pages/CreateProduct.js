@@ -22,6 +22,7 @@ const CreateProduct = () => {
   };
   return (
     <div>
+      <h2>Create Product</h2>
       <ProductForm submitHandler={submitHandler} buttonText={"Add Product"} />
     </div>
   );

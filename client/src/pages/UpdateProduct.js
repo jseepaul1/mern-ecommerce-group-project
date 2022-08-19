@@ -13,7 +13,9 @@ const UpdateProduct = () => {
   useEffect(() => {
     if (!state) {
       axios
-        .get(`http://localhost:8000/api/products/${id}`)
+        .get(`http://localhost:8000/api/products/${id}`, {
+          withCredentials: true,
+        })
         .then(({ data }) => {
           console.log("data from update product-", data);
           setCurrentProduct(data);
@@ -29,24 +31,28 @@ const UpdateProduct = () => {
 
   const submitHandler = (product, setErrors) => {
     axios
-      .put(`http://localhost:8000/api/products/${id}`, product)
+      .patch(`http://localhost:8000/api/products/${id}`, product, {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log(response);
         setCurrentProduct(response.data);
         navigate("/admin/dashboard");
       })
       .catch((err) => {
+        console.log("error response", err.response);
+        console.log("error response", err.response.data);
         console.log("error response data errors", err.response.data.errors);
         setErrors(err.response.data.error.errors);
       });
   };
   return currentProduct ? (
     <>
-      Edit - {currentProduct.productName} Report
-      <ProductForm
+    <h2>Edit- {currentProduct.productName}</h2>
+      <ProductForm 
         submitHandler={submitHandler}
         currentProduct={currentProduct}
-        buttonText="Edit Report"
+        buttonText="Edit Product"
       />
     </>
   ) : null;

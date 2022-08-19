@@ -57,6 +57,11 @@ const AdminHeader = () => {
                 <Navbar.Text>Add Product</Navbar.Text>
               </Link>
             </div>
+            <div className="mx-3">
+              <Link to="/admin/dashboard">
+                <Navbar.Text>Dashboard</Navbar.Text>
+              </Link>
+            </div>
           </Nav>
         </Navbar.Collapse>
         <NavbarCollapse className="justify-content-end">

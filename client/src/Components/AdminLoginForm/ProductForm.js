@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/esm/Container";
-import AdminHeader from "../Header/AdminHeader";
 import { useNavigate } from "react-router-dom";
 
 const ProductForm = (props) => {
@@ -41,14 +40,13 @@ const ProductForm = (props) => {
 
   return (
     <>
-      <AdminHeader />
       <Container className="product-container">
         <form onSubmit={submitHandler}>
-          <h2>Add Product</h2>
           <br />
           <div className="form">
-            <label>Name:</label>
-            <input className="input"
+            <label className="label">Name:</label>
+            <input
+              className="input"
               type="text"
               value={product.productName}
               onChange={handleChange}
@@ -60,8 +58,8 @@ const ProductForm = (props) => {
                 {errors.productName.message}
               </p>
             )}
-            <label>Price:</label>
-            <input 
+            <label className="label">Price:</label>
+            <input
               className="category"
               type="number"
               value={product.price}
@@ -72,8 +70,9 @@ const ProductForm = (props) => {
               <p className="product-error-message">{errors.price.message}</p>
             )}
             <br />
-            <label>ImageURL:</label>
-            <input className="input"
+            <label className="label">ImageURL:</label>
+            <input
+              className="input"
               type="text"
               value={product.image}
               onChange={handleChange}
@@ -83,7 +82,7 @@ const ProductForm = (props) => {
               <p className="product-error-message">{errors.image.message}</p>
             )}
             <br />
-            <label>Categories:</label>
+            <label className="label">Categories:</label>
             <select
               className="category"
               onChange={handleChange}
@@ -115,7 +114,7 @@ const ProductForm = (props) => {
               <p className="product-error-message">{errors.category.message}</p>
             )}
             <br />
-            <label>Description</label>
+            <label className="label">Description</label>
             <textarea
               type="text"
               value={product.description}
@@ -128,17 +127,22 @@ const ProductForm = (props) => {
               </p>
             )}
           </div>
-          <div className ="product-button">
-          <Button
-            className="product-button"
-            type="submit"
-            value={props.buttonText}
-          >
-            Add Product
-          </Button>
-          <Button className="product-button" type = "submit" variant="success" onClick={handleCancel}>
-            Cancel
-          </Button>
+          <div className="product-button">
+            <Button
+              className="product-button"
+              type="submit"
+              value={props.buttonText}
+            >
+              {props.buttonText}
+            </Button>
+            <Button
+              className="product-button"
+              type="submit"
+              variant="success"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
           </div>
         </form>
       </Container>
