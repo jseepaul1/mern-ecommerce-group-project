@@ -1,5 +1,4 @@
 const Order = require("../models/order.model");
-const { deleteCartItemsByUserId } = require("./cart-item.controller");
 require("dotenv").config();
 
 module.exports = {

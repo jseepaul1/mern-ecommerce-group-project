@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const User = require("../models/user.model");
 require("dotenv").config();
 
 
