@@ -4,7 +4,8 @@ const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-require("./config/mongoose.config");
+// require("./config/mongoose.config");
+const mongoose = require('mongoose')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,6 +25,10 @@ require("./routes/product.routes")(app);
 require("./routes/order.routes")(app);
 require("./routes/cart-item.routes")(app);
 
-app.listen(process.env.PORT, () => {
-  console.log(`You are connected to port ${process.env.PORT}`);
-});
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`You are connected to DB & listening on port ${process.env.PORT}`);
+    });
+  })
+  .catch((error) => console.log(error))
