@@ -108,10 +108,20 @@ const getLoggedInUser = async (req, res) => {
   }
 };
 
+const addToCart = async (req, res) => {
+  try {
+    const addToCartById = await User.findOneAndUpdate({ _id: req.user._id }, { $push: { cart: req.params.id, }}, { new: true, useFindAndModify: false })
+      res.json(addToCartById)
+  } catch (err) {
+    res.status(400).json({ message: "error in adding to cart", error: err });
+  }
+}
+
 module.exports = {
   register,
   login,
   logout,
   getLoggedInUser,
   updateUser,
+  addToCart,
 };

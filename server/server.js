@@ -23,7 +23,6 @@ app.use(bodyParser.json());
 require("./routes/user.routes")(app);
 require("./routes/product.routes")(app);
 require("./routes/order.routes")(app);
-require("./routes/cart-item.routes")(app);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
