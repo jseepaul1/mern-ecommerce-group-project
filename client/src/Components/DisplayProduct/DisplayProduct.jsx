@@ -20,7 +20,7 @@ const DisplayProduct = () => {
     }, [id])
 
     // Add to cart handle
-    const submitHandle = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         axios
             .put(`http://localhost:8000/api/users/${id}`, {}, { withCredentials: true })
@@ -49,7 +49,7 @@ const DisplayProduct = () => {
                         <h5>{product.price}</h5>
                         <h5>{product.category}</h5>
                         <h6>{product.description}</h6>
-                        <button className='btn btn-primary' onClick={submitHandle}> Add to cart </button>
+                        <button className='btn btn-primary' onClick={handleSubmit}> Add to cart </button>
                     </div>
                 </div>
             </div>
