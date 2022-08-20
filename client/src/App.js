@@ -15,6 +15,7 @@ import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import AdminHeader from "./Components/Header/AdminHeader";
 import Header from "./Components/Header/Header";
+import AdminDashboardOrders from "./pages/AdminDashboardOrders";
 
 function App() {
   return (
@@ -51,6 +52,17 @@ function App() {
                 <ProtectedAdminRoute>
                   <AdminHeader />
                   <UpdateProduct />
+                </ProtectedAdminRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/dashboard/orders"
+            element={
+              <ProtectedRoute>
+                <ProtectedAdminRoute>
+                  <AdminHeader />
+                  <AdminDashboardOrders />
                 </ProtectedAdminRoute>
               </ProtectedRoute>
             }

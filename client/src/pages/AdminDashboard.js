@@ -39,7 +39,11 @@ const AdminDashboard = () => {
   return (
     <div>
       <Container>
-        <h3>Below is the list of Products Available</h3>
+        <h2>Welcome to the Admin Panel</h2>
+        <h4>
+          Here you can Manage Products List as well as View Customers Orders and
+          Make Modifications
+        </h4>
         <Table className="admin-table" striped bordered hover>
           <thead>
             <tr>
