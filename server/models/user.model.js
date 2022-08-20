@@ -83,7 +83,13 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       minLength: [8, "Password must be at least 8 characters"],
     },
-    cart: { type: [String] },
+    cart: [
+      {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Product",
+        default: undefined,
+      },
+    ],
     shippingAddress: {
       type: shippingAddressSchema,
       required: false,
