@@ -23,8 +23,10 @@ const DisplayProduct = () => {
     const submitHandle = (e) => {
         e.preventDefault();
         axios
-            .post(`http://localhost:8000/`)
-            .then()
+            .put(`http://localhost:8000/api/users/${id}`, {}, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+            })
             .catch((err) => {
                 console.log(err)
             });
