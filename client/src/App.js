@@ -87,7 +87,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/checkout/:id" element={<Checkout />}/>
+          <Route
+            path="/checkout/:id"
+            element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
