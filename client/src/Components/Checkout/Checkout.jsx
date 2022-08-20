@@ -26,7 +26,8 @@ const Checkout = () => {
         axios
             .get(`http://localhost:8000/api/productsFromCart/${id}`, { withCredentials: true })
             .then((res) => {
-                setCartItems(res.data);
+                console.log(res.data.cart);
+                setCartItems(res.data.cart);
             })
             .catch((err) => {
                 console.log(err);

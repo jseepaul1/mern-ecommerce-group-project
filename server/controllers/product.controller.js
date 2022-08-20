@@ -70,19 +70,13 @@ module.exports = {
 
   getProductsFromCart: async (req, res) => {
     try {
-      User.findOne({ _id: req.params.id }).then((user) => {
-        Product.find({ cart: user._id })
-          .populate('cart', 'productName price category description image')
-          .then((product) => {
-            console.log("Got products in cart", product);
-            res.status(200).json(product);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      })
-    } catch (err) {
-        res.status(400).json({ message: "error in getting products in cart", error: err });
-      }
+      const findProductInCart = await User.findOne({
+          _id: req.params.id 
+        }).populate('cart', 'productName price category description image')
+        console.log("Got products in cart", findProductInCart);
+        res.status(200).json(findProductInCart);
+    } catch (error) {
+      res.status(400).json({ message: "error in getting products in cart", error: error });
+    }
   },
 };
