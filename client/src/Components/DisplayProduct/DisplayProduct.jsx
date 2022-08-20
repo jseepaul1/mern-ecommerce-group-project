@@ -12,7 +12,6 @@ const DisplayProduct = () => {
         axios
             .get(`http://localhost:8000/api/products/${id}`, { withCredentials: true })
             .then((res) => {
-                console.log(res.data);
                 setProduct(res.data);
             })
             .catch((err) => {
@@ -20,15 +19,38 @@ const DisplayProduct = () => {
             });
     }, [id])
 
+    // Add to cart handle
+    const submitHandle = (e) => {
+        e.preventDefault();
+        axios
+            .put(`http://localhost:8000/api/users/${id}`, {}, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
     return (
         <div>
             <div className='container'>
-                <div>
-                    {product.productName}
-                    {product.price}
-                    {product.category}
-                    {product.description}
-                    {product.image}
+                <div className='d-flex'>
+                    <div>
+                        <img 
+                            className='card-img-top mangaCoverImage'
+                            style={{ width: '200px', height: 'auto' }} 
+                            src={product.image}
+                            alt='Cardpic'
+                        />
+                    </div>
+                    <div>
+                        <h2>{product.productName}</h2>
+                        <h5>{product.price}</h5>
+                        <h5>{product.category}</h5>
+                        <h6>{product.description}</h6>
+                        <button className='btn btn-primary' onClick={submitHandle}> Add to cart </button>
+                    </div>
                 </div>
             </div>
         </div>

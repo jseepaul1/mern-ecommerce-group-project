@@ -8,6 +8,7 @@ import AdminLoginForm from "./Components/AdminLoginForm/AdminLoginForm";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import DisplayProduct from "./Components/DisplayProduct/DisplayProduct";
 import ProtectedAdminRoute from "./Components/ProtectedRoute/ProtectedAdminRoute";
+import Checkout from "./Components/Checkout/Checkout";
 
 // page imports
 import AdminDashboard from "./pages/AdminDashboard";
@@ -86,6 +87,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/checkout/:id" element={<Checkout />}/>
         </Routes>
       </div>
     </BrowserRouter>

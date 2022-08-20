@@ -101,12 +101,22 @@ const updateUser = async (req, res) => {
 
 const getLoggedInUser = async (req, res) => {
   try {
-    const currentUser = await User.findOne({ _id: req.user._id }); 
+    const currentUser = await User.findOne({ _id: req.user._id }).populate('cart', 'id')
     res.json(currentUser);
   } catch (error) {
     res.status(401).json({ error });
   }
 };
+
+const addToCart = async (req, res) => {
+  try {
+    const user = jwt.verify(req.cookies.userToken, SECRET);
+    const addToCartById = await User.findOneAndUpdate({ _id: user._id }, { $push: { cart: req.params.id, }}, { new: true, useFindAndModify: false })
+      res.json(addToCartById)
+  } catch (err) {
+    res.status(400).json({ message: "error in adding to cart", error: err });
+  }
+}
 
 module.exports = {
   register,
@@ -114,4 +124,5 @@ module.exports = {
   logout,
   getLoggedInUser,
   updateUser,
+  addToCart,
 };

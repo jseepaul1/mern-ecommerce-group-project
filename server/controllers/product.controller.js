@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const User = require("../models/user.model");
 require("dotenv").config();
 
 
@@ -65,5 +66,23 @@ module.exports = {
     } catch (err) {
       res.status(400).json({ message: "error in delete product", error: err });
     }
+  },
+
+  getProductsFromCart: async (req, res) => {
+    try {
+      User.findOne({ _id: req.params.id }).then((user) => {
+        Product.find({ cart: user._id })
+          .populate('cart', 'productName price category description image')
+          .then((product) => {
+            console.log("Got products in cart", product);
+            res.status(200).json(product);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      })
+    } catch (err) {
+        res.status(400).json({ message: "error in getting products in cart", error: err });
+      }
   },
 };
