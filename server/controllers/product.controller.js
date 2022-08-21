@@ -67,16 +67,4 @@ module.exports = {
       res.status(400).json({ message: "error in delete product", error: err });
     }
   },
-
-  getProductsFromCart: async (req, res) => {
-    try {
-      const findProductInCart = await User.findOne({
-          _id: req.params.id 
-        }).populate('cart', 'productName price category description image')
-        console.log("Got products in cart", findProductInCart);
-        res.status(200).json(findProductInCart);
-    } catch (error) {
-      res.status(400).json({ message: "error in getting products in cart", error: error });
-    }
-  },
 };

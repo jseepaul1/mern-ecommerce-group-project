@@ -104,7 +104,7 @@ const getLoggedInUser = async (req, res) => {
   try {
     const currentUser = await User.findOne({ _id: req.user._id }).populate(
       "cart",
-      "id"
+      "id productName price category description image"
     );
     res.json(currentUser);
   } catch (error) {

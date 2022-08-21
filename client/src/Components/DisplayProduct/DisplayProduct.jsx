@@ -7,7 +7,7 @@ const DisplayProduct = () => {
     const [product, setProduct] = useState([]);
     const { id } = useParams();
 
-    // Getting manga 
+    // Getting products 
     useEffect(() => {
         axios
             .get(`http://localhost:8000/api/products/${id}`, { withCredentials: true })
@@ -21,7 +21,6 @@ const DisplayProduct = () => {
 
     // Add to cart handle
     const handleSubmit = (e) => {
-        e.preventDefault();
         axios
             .put(`http://localhost:8000/api/users/${id}`, {}, { withCredentials: true })
             .then((res) => {

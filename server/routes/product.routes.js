@@ -9,11 +9,6 @@ module.exports = (app) => {
     authenticateToken,
     productController.getProductById
   );
-  app.get(
-    "/api/productsFromCart/:id",
-    authenticateToken,
-    productController.getProductsFromCart
-  );
   app.post(
     "/api/products",
     authenticateToken,

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../Header/Header';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Checkout = () => {
     const [cartItems, setCartItems] = useState([]);
-    const [user, setUser] = useState([]);
-    const { id } = useParams();
 
     // Get logged in user
     useEffect(() => {
@@ -14,25 +12,12 @@ const Checkout = () => {
             .get("http://localhost:8000/api/user", { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
-                setUser(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
-
-    // Get product in cart
-    useEffect(() => {
-        axios
-            .get(`http://localhost:8000/api/productsFromCart/${id}`, { withCredentials: true })
-            .then((res) => {
-                console.log(res.data.cart);
                 setCartItems(res.data.cart);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }, [id]);
+    }, []);
 
     return (
     <div>

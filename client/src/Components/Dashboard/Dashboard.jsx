@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Dashboard.css'
+import axios from 'axios';
+import './Dashboard.css';
+import Products from '../Products/Products';
+import Pagination from './Pagination/Pagination';
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productsPerPage] = useState(2);
     const filters = [
         "Jeans",
         "Shirts",
@@ -26,18 +31,27 @@ const Dashboard = () => {
         "Swimsuits",
         "Pajamas",
     ];
+
+    // Get all products
     useEffect(() => {
-        axios
-            .get('http://localhost:8000/api/products', { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                setProducts(res.data);
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [])
+        const getProducts = async () => {
+            setLoading(true);
+            const res = await axios.get('http://localhost:8000/api/products', { withCredentials: true })
+            console.log(res.data);
+            setProducts(res.data);
+            setLoading(false);
+            }
+        getProducts();
+    }, []);
+
+    // Get current products
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
     
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
     <div>
         <h1 className='container mt-5'>
@@ -51,25 +65,9 @@ const Dashboard = () => {
                         </h4>
                     ))}
                 </div>
-                <div className='d-flex flex-grow-1 justify-content-evenly align-items-center flex-wrap productList'>
-                    {products.map((product) => (
-                        <div key={product._id} className='card mb-4' style={{ flex: "0 0 30%" }}>
-                            <Link to={`/product/${product._id}`} style={{ textDecoration: 'none' }}>
-                                <img 
-                                    className='card-img-top mangaCoverImage'
-                                    src={product.image}
-                                    style={{ width: '200px', height: 'auto' }}
-                                    alt='Cardpic'
-                                />
-                                <div className='card-body'>
-                                    <h2 className='card-title'>{product.productName}</h2>
-                                    <h4 className='card-title'>${product.price}</h4>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
+                <Products products={currentProducts} loading={loading}/>
             </div>
+            <Pagination productsPerPage={productsPerPage} totalProducts={products.length} paginate={paginate} />
         </h1>
     </div>
     )
