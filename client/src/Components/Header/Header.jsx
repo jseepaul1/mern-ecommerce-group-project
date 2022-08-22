@@ -67,8 +67,8 @@ const Header = ({ refreshCart, setRefreshCart }) => {
               </Link>
             </div>
             <div className="mx-3">
-              <Link to="/company">
-                <Navbar.Text>Company</Navbar.Text>
+              <Link to="/profile/:id">
+                <Navbar.Text>Profile</Navbar.Text>
               </Link>
             </div>
           </Nav>

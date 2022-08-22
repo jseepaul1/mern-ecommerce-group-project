@@ -9,7 +9,7 @@ const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(10);
+    const [productsPerPage] = useState(9);
     const filters = [
         "Jeans",
         "Shirts",

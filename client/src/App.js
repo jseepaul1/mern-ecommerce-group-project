@@ -9,6 +9,7 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import DisplayProduct from "./Components/DisplayProduct/DisplayProduct";
 import ProtectedAdminRoute from "./Components/ProtectedRoute/ProtectedAdminRoute";
 import Checkout from "./Components/Checkout/Checkout";
+import Profile from "./Components/Profile/Profile";
 
 // page imports
 import AdminDashboard from "./pages/AdminDashboard";
@@ -86,6 +87,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/profile/:id" element={<Profile />}/>
           <Route
             path="/checkout/:id"
             element={
