@@ -7,24 +7,36 @@ import Container from "react-bootstrap/Container";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ refreshCart, setRefreshCart }) => {
   const [user, setUser] = useState([]);
   const [cart, setCart] = useState();
   const navigate = useNavigate("");
 
-  // Get logged in user
-  useEffect(() => {
+  const updateCart = () => {
     axios
       .get("http://localhost:8000/api/user", { withCredentials: true })
       .then((res) => {
         console.log(res.data);
         setUser(res.data);
-        setCart(res.data.cart.length)
+        setCart(res.data.cart.length);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // Get logged in user
+  useEffect(() => {
+    updateCart();
   }, []);
+
+  useEffect(() => {
+    if (refreshCart) {
+      updateCart();
+      setRefreshCart(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshCart]);
 
   // Logout handle
   const handleLogout = (e) => {
@@ -44,7 +56,7 @@ const Header = () => {
     <Navbar bg="dark" variant="dark" className="mb-3">
       <Container>
         <Navbar.Brand>
-          <h2 className="me-4">Site Name and Logo</h2>
+          <h2 className="me-4 logo-name">CLOTHESЯUS</h2>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -90,9 +102,7 @@ const Header = () => {
                 </svg>
               </Link>
             </Navbar.Text>
-            <Navbar.Text>
-              {cart}
-            </Navbar.Text>
+            <Navbar.Text>{cart}</Navbar.Text>
           </Nav>
         </NavbarCollapse>
       </Container>

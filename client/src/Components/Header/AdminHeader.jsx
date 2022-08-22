@@ -42,7 +42,7 @@ const AdminHeader = () => {
     <Navbar bg="dark" variant="dark" className="mb-3">
       <Container>
         <Navbar.Brand>
-          <h2 className="me-4">Site Name and Logo</h2>
+          <h2 className="me-4 logo-name">CLOTHESЯUS</h2>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

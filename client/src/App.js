@@ -72,7 +72,6 @@ function App() {
             path="/product/:id"
             element={
               <ProtectedRoute>
-                <Header />
                 <DisplayProduct />{" "}
               </ProtectedRoute>
             }
@@ -91,6 +90,7 @@ function App() {
             path="/checkout/:id"
             element={
               <ProtectedRoute>
+                <Header />
                 <Checkout />
               </ProtectedRoute>
             }

@@ -59,3 +59,26 @@ code {
 .admin-table {
   margin-top: 4%;
 }
+
+.card-title {
+  font-size: 1.2rem !important;
+}
+
+.pagination {
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.page-item {
+  font-size: 30px;
+}
+
+.price, .product-price {
+  color: rgb(194, 22, 22);
+}
+
+.logo-name {
+  color: #fefefe;
+  box-shadow: 1px 1px 1px 0px blue;
+  font-family: cursive;
+}

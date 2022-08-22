@@ -1,0 +1,27 @@
+.card-container {
+    height: 50vh;
+    box-shadow: 1px 2px 5px 3px #aaaaaa;
+}
+
+.image-container {
+    height: 80%;
+}
+
+.card-image {
+    padding: 2% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+.card-body {
+    height: 30%;
+}
+
+.display-one-container {
+    display: flex !important;
+    justify-content: center;
+}
+
+.display-one-image {
+    border: 1px solid black;
+}
