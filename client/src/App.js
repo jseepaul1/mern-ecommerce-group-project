@@ -72,7 +72,6 @@ function App() {
             path="/product/:id"
             element={
               <ProtectedRoute>
-                <Header />
                 <DisplayProduct />{" "}
               </ProtectedRoute>
             }

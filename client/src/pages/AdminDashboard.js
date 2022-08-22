@@ -58,7 +58,7 @@ const AdminDashboard = () => {
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.productName}</td>
-                <td>${product.price}</td>
+                <td className="price">${product.price}</td>
                 <td>
                   <Button
                     class="btn btn-success"
