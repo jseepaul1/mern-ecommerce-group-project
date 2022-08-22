@@ -1,7 +1,6 @@
 import "./Checkout.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Header from "../Header/Header";
 import { Link } from "react-router-dom";
 
 const Checkout = () => {
@@ -23,7 +22,7 @@ const Checkout = () => {
 
   return (
     <div>
-      <Header />
+      
       <h1>Checkout Page</h1>
       <div className="d-flex flex-grow-1 justify-content-evenly align-items-center flex-wrap productList checkout-container">
         {cartItems.map((cartItem, index) => (

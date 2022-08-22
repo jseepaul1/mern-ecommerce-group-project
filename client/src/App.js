@@ -90,6 +90,7 @@ function App() {
             path="/checkout/:id"
             element={
               <ProtectedRoute>
+                <Header />
                 <Checkout />
               </ProtectedRoute>
             }
