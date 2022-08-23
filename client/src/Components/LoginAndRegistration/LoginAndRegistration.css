@@ -1,0 +1,8 @@
+.loginAndRegistrationForm {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    background-color: #7e7b7b;
+    color: #000000;
+    font-weight: 500;
+}
