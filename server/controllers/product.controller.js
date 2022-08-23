@@ -13,16 +13,15 @@ module.exports = {
 
       if (req.query.productName) {
         const regExpString = `.*${req.query.productName}.*`;
-        console.log("regExpString - ", regExpString);
+        // console.log("regExpString - ", regExpString);
         filterObject["productName"] = {
           $regex: new RegExp(regExpString, "i"),
         };
       }
 
-      const findAllProducts = await Product.find(filterObject).populate(
-        "createdBy",
-        "firstName lastName email"
-      );
+      const findAllProducts = await Product.find(filterObject)
+        .populate("createdBy", "firstName lastName email")
+        .sort("category");
       res.status(201).json(findAllProducts);
     } catch (err) {
       res.status(400).json({ message: "error in findAll", error: err });
@@ -35,7 +34,7 @@ module.exports = {
         ...req.body,
         createdBy: req.user._id,
       });
-      console.log("newProduct - ", newProduct);
+      // console.log("newProduct - ", newProduct);
       res.status(201).json(newProduct);
     } catch (err) {
       res.status(400).json({ message: "error in create", error: err });
@@ -46,7 +45,7 @@ module.exports = {
     try {
       console.log("find one id", req.params.id);
       const oneProduct = await Product.findOne({ _id: req.params.id });
-      console.log("oneProduct - ", oneProduct);
+      // console.log("oneProduct - ", oneProduct);
       res.status(200).json(oneProduct);
     } catch (err) {
       res.status(400).json({ message: "error in find one", error: err });
@@ -74,7 +73,7 @@ module.exports = {
       const deleteOneProductById = await Product.deleteOne({
         _id: req.params.id,
       });
-      console.log("deleteOneProductById", deleteOneProductById);
+      // console.log("deleteOneProductById", deleteOneProductById);
       res.status(200).json(deleteOneProductById);
     } catch (err) {
       res.status(400).json({ message: "error in delete product", error: err });

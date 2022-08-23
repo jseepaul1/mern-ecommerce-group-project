@@ -87,7 +87,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route
+            path="/profile/:id"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/checkout/:id"
             element={

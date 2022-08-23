@@ -5,7 +5,6 @@ import "./Dashboard.css";
 import Products from "../Products/Products";
 import Pagination from "./Pagination/Pagination";
 import { Search } from "react-bootstrap-icons";
-import debounce from "lodash.debounce";
 
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
@@ -35,7 +34,7 @@ const Dashboard = () => {
     "Swimsuits",
     "Pajamas",
   ];
-
+  filters.sort();
   const getProducts = async (category, productName) => {
     setLoading(true);
     let url = "http://localhost:8000/api/products";
@@ -63,10 +62,6 @@ const Dashboard = () => {
   };
 
   // Get all products
-  useEffect(() => {
-    getProducts();
-  }, []);
-
   useEffect(() => {
     getProducts(category, productName);
   }, [category, productName]);
