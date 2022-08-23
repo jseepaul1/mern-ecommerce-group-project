@@ -37,7 +37,7 @@ const Header = ({ refreshCart, setRefreshCart }) => {
       updateCart();
       setRefreshCart(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshCart]);
 
   // Logout handle

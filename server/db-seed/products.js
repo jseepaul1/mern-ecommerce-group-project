@@ -195,12 +195,12 @@ const dbSeed = async () => {
   try {
     // Step 1 - Connect to the DB
     const mongoClient = await mongoose.connect(process.env.MONGO_URI);
-    console.log("Successfully connected to Mongo DB - ");
+    // console.log("Successfully connected to Mongo DB - ");
 
     for (let i = 0; i < 100; i++) {
-      console.log("==================");
-      console.log(`Product #${i + 1}`);
-      console.log("==================");
+      // console.log("==================");
+      // console.log(`Product #${i + 1}`);
+      // console.log("==================");
       // Step 2 - Get a random product price
       const price = Math.ceil(Math.random() * 80) + 20;
 
@@ -236,17 +236,17 @@ const dbSeed = async () => {
         description,
         image,
       };
-      console.log("Item generated for DB insert - ", item);
+      // console.log("Item generated for DB insert - ", item);
       const newProduct = await Product.create({
         ...item,
       });
-      console.log("Item inserted to DB - ", newProduct);
-      console.log("==================");
+      // console.log("Item inserted to DB - ", newProduct);
+      // console.log("==================");
     }
   } catch (err) {
-    console.log("Error while seeding DB - ", err);
+    // console.log("Error while seeding DB - ", err);
   }
 };
 
 dbSeed();
-console.log('After dbSeed()')
+// console.log('After dbSeed()')
