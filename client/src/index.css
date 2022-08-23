@@ -62,6 +62,8 @@ code {
 
 .card-title {
   font-size: 1.2rem !important;
+  font-family: emoji;
+  padding: 1%;
 }
 
 .pagination {
@@ -80,5 +82,9 @@ code {
 .logo-name {
   color: #fefefe;
   box-shadow: 1px 1px 1px 0px blue;
-  font-family: cursive;
+  font-family: emoji;
+}
+
+.page-link {
+  font-family: emoji;
 }

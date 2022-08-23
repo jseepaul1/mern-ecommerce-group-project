@@ -6,8 +6,8 @@ const Products = ({ products, loading }) => {
   if (loading) {
     return <h2>Loading...</h2>;
   }
-  return (
-    <div>
+  return products.length ? (
+    <div style={{ width: "100%" }}>
       <div className="d-flex flex-grow-1 justify-content-evenly align-items-center flex-wrap productList">
         {products.map((product) => (
           <div
@@ -30,13 +30,17 @@ const Products = ({ products, loading }) => {
 
               <div className="card-body">
                 <h2 className="card-title">{product.productName}</h2>
-                <h4 className="card-title price product-price">${product.price}</h4>
+                <h4 className="card-title price product-price">
+                  ${product.price}
+                </h4>
               </div>
             </Link>
           </div>
         ))}
       </div>
     </div>
+  ) : (
+    <div>Oops nothing found!</div>
   );
 };
 

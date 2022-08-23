@@ -2,11 +2,24 @@ const Product = require("../models/product.model");
 const User = require("../models/user.model");
 require("dotenv").config();
 
-
 module.exports = {
   getAllProducts: async (req, res) => {
     try {
-      const findAllProducts = await Product.find({}).populate(
+      const filterObject = {};
+
+      if (req.query.category) {
+        filterObject["category"] = req.query.category;
+      }
+
+      if (req.query.productName) {
+        const regExpString = `.*${req.query.productName}.*`;
+        console.log("regExpString - ", regExpString);
+        filterObject["productName"] = {
+          $regex: new RegExp(regExpString, "i"),
+        };
+      }
+
+      const findAllProducts = await Product.find(filterObject).populate(
         "createdBy",
         "firstName lastName email"
       );

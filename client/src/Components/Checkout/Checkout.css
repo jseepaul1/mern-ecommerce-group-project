@@ -19,4 +19,5 @@
 
 .card-body {
     height: 30%;
+    padding:0 !important;
 }
