@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import './LoginAndRegistration.css'
 
 const LoginAndRegistration = () => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const LoginAndRegistration = () => {
           className="justify-content-evenly card p-2 w-50"
           style={{ backgroundColor: "#eee" }}
         >
-          <form onSubmit={handleRegisterSubmit}>
+          <form onSubmit={handleRegisterSubmit} className='registerForm'>
             <h2 className="pt-5">Register</h2>
             <div className="align-items-center py-2">
               <div className="row">
@@ -181,7 +182,7 @@ const LoginAndRegistration = () => {
           className="justify-content-evenly card p-2 w-25"
           style={{ backgroundColor: "#eee" }}
         >
-          <form onSubmit={handleLoginSubmit}>
+          <form onSubmit={handleLoginSubmit} className='loginForm'>
             <h2>Login</h2>
             <div className="align-items-center py-2">
               <div className="align-items-center py-3">

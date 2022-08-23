@@ -9,6 +9,7 @@ import "./Header.css";
 
 const Header = ({ refreshCart, setRefreshCart }) => {
   const [user, setUser] = useState([]);
+  const [userId, setUserId] = useState();
   const [cart, setCart] = useState();
   const navigate = useNavigate("");
 
@@ -19,6 +20,7 @@ const Header = ({ refreshCart, setRefreshCart }) => {
         console.log(res.data);
         setUser(res.data);
         setCart(res.data.cart.length);
+        setUserId(res.data._id);
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +69,7 @@ const Header = ({ refreshCart, setRefreshCart }) => {
               </Link>
             </div>
             <div className="mx-3">
-              <Link to="/profile/:id">
+              <Link to={`/profile/${userId}`}>
                 <Navbar.Text>Profile</Navbar.Text>
               </Link>
             </div>
