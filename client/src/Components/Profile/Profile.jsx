@@ -37,7 +37,7 @@ const Profile = () => {
             })
             .catch((err) => {
                 console.log(err);
-                setErrors(err.data)
+                setErrors(err.data);
             });
     }, []);
 
@@ -52,7 +52,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err.response);
             })
-    }
+    };
 
     // Handle for editing shipping info
     const submitShippingHandler = () => {
@@ -65,7 +65,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err.response);
             })
-    }
+    };
 
     // Handle for editing billing info
     const submitBillingHandler = () => {
@@ -78,7 +78,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err.response);
             })
-    }
+    };
 
     return (
     <div>
