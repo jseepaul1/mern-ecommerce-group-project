@@ -79,3 +79,13 @@ code {
 .page-link {
   font-family: emoji;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  padding: 3%;
+  background-color: #e2dede;
+  border-radius: 15px;
+  margin-top: 4%;
+}
