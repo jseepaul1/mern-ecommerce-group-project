@@ -75,9 +75,11 @@ const logout = (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const currentUser = await User.findById(req.params.id);
+    const currentUser = await User.findById(req.params.id); // currentUser is the user object
     const { email, firstName, lastName, shippingAddress, billingInformation } =
-      req.body;
+      req.body; // is an object containing a key from above with it's value
+    // currentUser.email = email(current email in req.body) is whatever the user enters to update the value
+    // || currentUser.email is to keep the value to what it is if there is nothing provided
     currentUser.email = email || currentUser.email;
     currentUser.firstName = firstName || currentUser.firstName;
     currentUser.lastName = lastName || currentUser.lastName;
@@ -85,7 +87,7 @@ const updateUser = async (req, res) => {
       shippingAddress || currentUser.shippingAddress;
     currentUser.billingInformation =
       billingInformation || currentUser.billingInformation;
-    console.log("currentUser - ", currentUser);
+    console.log("currentUser! - ", currentUser);
     await User.findByIdAndUpdate(
       currentUser.id,
       {
