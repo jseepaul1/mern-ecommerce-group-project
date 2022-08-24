@@ -12,7 +12,7 @@ const CreateProduct = () => {
       })
       .then((response) => {
         console.log(response.data);
-        navigate("/dashboard");
+        navigate("/admin/dashboard");
       })
       .catch((err) => {
         // console.log("error response data", err.response.data);

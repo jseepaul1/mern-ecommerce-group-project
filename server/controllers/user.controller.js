@@ -74,12 +74,15 @@ const logout = (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  console.log('fdkfjdalkjfkds');
+  console.log('!!!!!!!!!!updating', req.body);
   try {
     const currentUser = await User.findById(req.params.id);
     const { email, firstName, lastName, shippingAddress, billingInformation } =
       req.body;
     currentUser.email = email || currentUser.email;
     currentUser.firstName = firstName || currentUser.firstName;
+    console.log(shippingAddress);
     currentUser.lastName = lastName || currentUser.lastName;
     currentUser.shippingAddress =
       shippingAddress || currentUser.shippingAddress;
