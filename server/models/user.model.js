@@ -58,7 +58,6 @@ const billingInformationSchema = new mongoose.Schema({
   expirationDate: {
     type: Date,
     required: [true, "Expiration Date is required"],
-    maxLength: [8, "Expiration Date is too long"],
   },
 });
 
