@@ -4,9 +4,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Checkout = () => {
+  var itemsInCart = 0;
   const [cartItems, setCartItems] = useState([]);
   const [user, setUser] = useState([]);
   const totalPrice = cartItems.reduce((total, product)=> total + (product.price),0);
+  const [order, setOrder] = useState({
+    items: cartItems,
+    totalPrice: totalPrice,
+  })
 
   // Get logged in user
   useEffect(() => {
@@ -22,10 +27,15 @@ const Checkout = () => {
       });
   }, []);
 
+  // Get how many items in cart
+  for (let i = 0; i > cartItems.length; i++) {
+    itemsInCart += 1;
+  }
+
   // Remove product from cart
   const removeProductHandle = (idFromBelow) => {
     axios
-        .put(`http://localhost:8000/api/users/${user._id}`, {} ,{ withCredentials: true })
+        .put(`http://localhost:8000/api/users/removeProductFromCart/${idFromBelow}`, {}, { withCredentials: true })
         .then((res) => {
             console.log(res.data);
             const filteredProducts = cartItems.filter(cartItems => {
@@ -41,7 +51,10 @@ const Checkout = () => {
   // Create order handler
   const createOrderHandle = () => {
     axios
-      .post("http://localhost:8000/api/orders", {} ,{ withCredentials: true })
+      .post("http://localhost:8000/api/orders", 
+      { 
+        order 
+      } ,{ withCredentials: true })
       .then((res) => {
         console.log(res);
       })
@@ -49,7 +62,6 @@ const Checkout = () => {
         console.log(err);
       })
   }
-
 
   return (
     <div>
@@ -87,7 +99,7 @@ const Checkout = () => {
         </div>
         <div className="d-flex col-3 mt-5">
           <div className="">
-            <h4>Total Price: ${totalPrice}</h4>
+            <h4>Subtotal: ({itemsInCart} items) ${totalPrice}</h4>
             <button className="btn btn-warning" onClick={createOrderHandle}>Complete Your Order</button>
           </div>
         </div>
