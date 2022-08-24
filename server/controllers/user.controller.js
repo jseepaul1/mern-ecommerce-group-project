@@ -74,8 +74,6 @@ const logout = (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  console.log('fdkfjdalkjfkds');
-  console.log('!!!!!!!!!!updating', req.body);
   try {
     const currentUser = await User.findById(req.params.id); // currentUser is the user object
     const { email, firstName, lastName, shippingAddress, billingInformation } =
@@ -109,7 +107,7 @@ const getLoggedInUser = async (req, res) => {
   try {
     const currentUser = await User.findOne({ _id: req.user._id }).populate(
       "cart",
-      "id productName price category description image"
+      "id productName price category description image shippingAddress billingInformation"
     );
     res.json(currentUser);
   } catch (error) {

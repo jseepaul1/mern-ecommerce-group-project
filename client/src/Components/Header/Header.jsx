@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Nav from "react-bootstrap/Nav";
@@ -12,6 +13,7 @@ const Header = ({ refreshCart, setRefreshCart }) => {
   const [userId, setUserId] = useState();
   const [cart, setCart] = useState();
   const navigate = useNavigate("");
+  const [cookies, setCookie, removeCookie] = useCookies(["userToken"]);
 
   const updateCart = () => {
     axios
@@ -46,6 +48,7 @@ const Header = ({ refreshCart, setRefreshCart }) => {
       .post("http://localhost:8000/api/users/logout", { withCredentials: true })
       .then((res) => {
         console.log(res);
+        removeCookie('userToken');
         navigate("/");
       })
       .catch((err) => {

@@ -43,7 +43,7 @@ const Profile = () => {
     };
 
     // Billing information on change handle
-    const handleBillingchange = (e) => {
+    const handleBillingChange = (e) => {
         setUserBilling({
             ...userBilling,
             [e.target.name]: e.target.value,
@@ -57,8 +57,12 @@ const Profile = () => {
             .then((res) => {
                 console.log(res.data);
                 setUser(res.data);
-                setUserShipping(res.data.shippingAddress);
-                setUserBilling(res.data.billingInformation);
+                if (res.data.shippingAddress) {
+                    setUserShipping(res.data.shippingAddress);
+                }
+                if (res.data.billingInformation) {
+                    setUserBilling(res.data.billingInformation);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -93,8 +97,9 @@ const Profile = () => {
                 console.log(res);
             })
             .catch((err) => {
-                console.log(err.response);
-                setErrors(err.data);
+                // console.log(err.response.shippingAddress.street);
+                // setErrors(err.data);
+                console.log('Error while updating shipping handler - ', err);
             })
     };
 
@@ -111,8 +116,9 @@ const Profile = () => {
                 console.log(res);
             })
             .catch((err) => {
-                console.log(err.response);
-                setErrors(err.data);
+                // console.log(err.response.billingInformation.street);
+                // setErrors(err.data);
+                console.log('Error while updating billing handler - ', err);
             })
     };
 
@@ -124,7 +130,7 @@ const Profile = () => {
                     <h1 className='mt-2'>Your Profile Page</h1>
                 </div>
                 <div>
-                    <form className='form d-flex justify-content-center my-3' onSubmit={submitProfileHandler}>
+                    <form className='form-container d-flex justify-content-center my-3' onSubmit={submitProfileHandler}>
                         <div className='col-4 mx-5'>
                             <div className='row my-4'>
                                 <div className='col'>
@@ -270,7 +276,7 @@ const Profile = () => {
                                             id='fullName'
                                             value={userBilling.fullName}
                                             className='form-control'
-                                            onChange={handleBillingchange}
+                                            onChange={handleBillingChange}
                                             required
                                         />
                                         <label htmlFor="fullName" className='px-4'>Full Name</label>
@@ -285,7 +291,7 @@ const Profile = () => {
                                             id='cardNumber'
                                             value={userBilling.cardNumber}
                                             className='form-control'
-                                            onChange={handleBillingchange}
+                                            onChange={handleBillingChange}
                                             required
                                         />
                                         <label htmlFor="cardNumber" className='px-4'>Card Number</label>
@@ -298,7 +304,7 @@ const Profile = () => {
                                             id='expirationDate'
                                             value={userBilling.expirationDate}
                                             className='form-control'
-                                            onChange={handleBillingchange}
+                                            onChange={handleBillingChange}
                                             max='8'
                                             required
                                         />
