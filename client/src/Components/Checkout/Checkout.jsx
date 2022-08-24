@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [user, setUser] = useState([]);
+  const totalPrice = cartItems.reduce((total, product)=> total + (product.price),0);
 
   // Get logged in user
   useEffect(() => {
@@ -12,6 +14,7 @@ const Checkout = () => {
       .get("http://localhost:8000/api/user", { withCredentials: true })
       .then((res) => {
         console.log(res.data);
+        setUser(res.data);
         setCartItems(res.data.cart);
       })
       .catch((err) => {
@@ -19,10 +22,34 @@ const Checkout = () => {
       });
   }, []);
 
+  // Remove product from cart
+  const removeProductHandle = (idFromBelow) => {
+    axios
+        .put(`http://localhost:8000/api/users/${user._id}`, {} ,{ withCredentials: true })
+        .then((res) => {
+            console.log(res.data);
+            const filteredProducts = cartItems.filter(cartItems => {
+                return cartItems._id !== idFromBelow
+            });
+            setCartItems(filteredProducts);
+        })
+        .catch((err) => {
+            console.log(err.response.data);
+        })
+}
+
   // Create order handler
   const createOrderHandle = () => {
-
+    axios
+      .post("http://localhost:8000/api/orders", {} ,{ withCredentials: true })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
+
 
   return (
     <div>
@@ -53,13 +80,14 @@ const Checkout = () => {
                     <h4 className="card-title price product-price">${cartItem.price}</h4>
                   </div>
                 </Link>
+                <button className="btn btn-danger" onClick={() => removeProductHandle(cartItem._id)}>Remove Item</button>
               </div>
             ))}
           </div>
         </div>
         <div className="d-flex col-3 mt-5">
           <div className="">
-            <h4>Total Price: ${cartItems.reduce((total, product)=> total + (product.price),0)}</h4>
+            <h4>Total Price: ${totalPrice}</h4>
             <button className="btn btn-warning" onClick={createOrderHandle}>Complete Your Order</button>
           </div>
         </div>

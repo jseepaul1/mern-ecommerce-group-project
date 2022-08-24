@@ -126,6 +126,18 @@ const addToCart = async (req, res) => {
   }
 };
 
+const removeProductFromCart = async (req, res) => {
+  try {
+    const user = jwt.verify(req.cookies.userToken, SECRET);
+    const removingProductFromCart = await User.findOneAndUpdate({
+      _id: user._id } , {$pull: { cart: req.params.id }},  { new: true, useFindAndModify: false })
+      res.status(200).json(removingProductFromCart)
+  } catch (err) {
+    console.log('Error in removing product from cart', err);
+    res.status(400).json({ message:"something went wrong in removing product from cart", error: err });
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -133,4 +145,5 @@ module.exports = {
   getLoggedInUser,
   updateUser,
   addToCart,
+  removeProductFromCart,
 };

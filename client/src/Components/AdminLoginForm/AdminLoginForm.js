@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 const AdminLoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState([]);
   const navigate = useNavigate();
   const submitAdminHandler = (e) => {
     e.preventDefault();
