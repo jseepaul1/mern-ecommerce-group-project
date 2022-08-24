@@ -16,6 +16,7 @@ const DisplayProduct = () => {
         withCredentials: true,
       })
       .then((res) => {
+        console.log(res.data)
         setProduct(res.data);
         setRefreshCart(true);
       })
@@ -26,12 +27,9 @@ const DisplayProduct = () => {
 
   // Add to cart handle
   const handleSubmit = (e) => {
+    e.preventDefault();
     axios
-      .put(
-        `http://localhost:8000/api/users/${id}`,
-        {},
-        { withCredentials: true }
-      )
+      .put(`http://localhost:8000/api/users/addToCart/${id}`, product ,{ withCredentials: true })
       .then((res) => {
         console.log(res);
         setRefreshCart(true);

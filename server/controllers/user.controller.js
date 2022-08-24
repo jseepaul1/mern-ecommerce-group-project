@@ -74,6 +74,8 @@ const logout = (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  console.log('fdkfjdalkjfkds');
+  console.log('!!!!!!!!!!updating', req.body);
   try {
     const currentUser = await User.findById(req.params.id); // currentUser is the user object
     const { email, firstName, lastName, shippingAddress, billingInformation } =
@@ -82,6 +84,7 @@ const updateUser = async (req, res) => {
     // || currentUser.email is to keep the value to what it is if there is nothing provided
     currentUser.email = email || currentUser.email;
     currentUser.firstName = firstName || currentUser.firstName;
+    console.log(shippingAddress);
     currentUser.lastName = lastName || currentUser.lastName;
     currentUser.shippingAddress =
       shippingAddress || currentUser.shippingAddress;
@@ -131,8 +134,10 @@ const addToCart = async (req, res) => {
 const removeProductFromCart = async (req, res) => {
   try {
     const user = jwt.verify(req.cookies.userToken, SECRET);
-    const removingProductFromCart = await User.findOneAndUpdate({
-      _id: user._id } , {$pull: { cart: req.params.id }},  { new: true, useFindAndModify: false })
+    const removingProductFromCart = await User.findOneAndUpdate(
+      { _id: user._id } , 
+      {$pull: { cart: req.params.id }},  
+      { new: true, useFindAndModify: false })
       res.status(200).json(removingProductFromCart)
   } catch (err) {
     console.log('Error in removing product from cart', err);

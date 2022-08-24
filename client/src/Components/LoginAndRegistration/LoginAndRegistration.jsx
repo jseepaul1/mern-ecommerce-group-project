@@ -58,7 +58,9 @@ const LoginAndRegistration = () => {
     axios
       .post(
         "http://localhost:8000/api/users/login",
-        { ...loginUser },
+        { 
+          ...loginUser 
+        },
         { withCredentials: true }
       )
       .then((res) => {
