@@ -2,8 +2,10 @@ import "./Checkout.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Header from "../Header/Header";
 
 const Checkout = () => {
+  const [refreshCart, setRefreshCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [user, setUser] = useState([]);
   const totalPrice = cartItems.reduce((total, product)=> total + (product.price),0);
@@ -36,6 +38,7 @@ const Checkout = () => {
                 return cartItems._id !== idFromBelow
             });
             setCartItems(filteredProducts);
+            setRefreshCart(true);
         })
         .catch((err) => {
             console.log(err.response.data);
@@ -59,6 +62,7 @@ const Checkout = () => {
 
   return (
     <div>
+      <Header refreshCart={refreshCart} setRefreshCart={setRefreshCart} />
       <h1>Checkout Page</h1>
       <div className="d-flex mt-4">
         <div className="d-flex">
