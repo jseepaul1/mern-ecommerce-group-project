@@ -64,11 +64,7 @@ const Profile = () => {
     // Handle for editing main profile data
     const submitProfileHandler = () => {
         axios
-            .put(`http://localhost:8000/api/users/${id}`, 
-            {
-                ...user
-            }, 
-            { withCredentials: true })
+            .patch(`http://localhost:8000/api/users/${id}`, user , { withCredentials: true })
             .then((res) => {
                 console.log(res);
             })
@@ -117,7 +113,7 @@ const Profile = () => {
                 <h1 className='my-4'>Your Profile Page</h1>
             </div>
             <div>
-                <form className='form d-flex justify-content-center mt-2' onSubmit={submitProfileHandler}>
+                <form className='form-container d-flex justify-content-center mt-2' onSubmit={submitProfileHandler}>
                     <div className='col-4 mx-5'>
                         <div className='row my-4'>
                             <div className='col'>
