@@ -6,14 +6,14 @@ module.exports = {
   getAllProducts: async (req, res) => {
     try {
       const filterObject = {};
-
+      // req.is everything after the ? in the url
       if (req.query.category) {
         filterObject["category"] = req.query.category;
       }
 
       if (req.query.productName) {
         const regExpString = `.*${req.query.productName}.*`;
-        // console.log("regExpString - ", regExpString);
+        // console.log("regExpString - ", regExpString); op
         filterObject["productName"] = {
           $regex: new RegExp(regExpString, "i"),
         };
@@ -43,7 +43,7 @@ module.exports = {
 
   getProductById: async (req, res) => {
     try {
-      console.log("find one id", req.params.id);
+      // console.log("find one id", req.params.id);
       const oneProduct = await Product.findOne({ _id: req.params.id });
       // console.log("oneProduct - ", oneProduct);
       res.status(200).json(oneProduct);
