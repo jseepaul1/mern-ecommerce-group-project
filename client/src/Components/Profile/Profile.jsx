@@ -10,11 +10,17 @@ const Profile = () => {
         firstName: '',
         lastName: '',
         email: '',
+    });
+
+    const [userShipping, setUserShipping] = useState({
         street: '',
         city: '',
         state: '',
         zipCode: '',
         phoneNumber: '',
+    });
+
+    const [userBilling, setBilling] = useState({
         fullName: '',
         cardNumber: '',
         expirationDate: '',
@@ -23,6 +29,20 @@ const Profile = () => {
     const handleChange = (e) => {
         setUser({
             ...user,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleShippingChange = (e) => {
+        setUserShipping({
+            ...userShipping,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleBillingchange = (e) => {
+        setBilling({
+            ...userBilling,
             [e.target.name]: e.target.value,
         });
     };
@@ -43,7 +63,6 @@ const Profile = () => {
 
     // Handle for editing main profile data
     const submitProfileHandler = () => {
-        console.log('main profile');
         axios
             .patch(`http://localhost:8000/api/users/${id}`, user , { withCredentials: true })
             .then((res) => {
@@ -56,9 +75,12 @@ const Profile = () => {
 
     // Handle for editing shipping info
     const submitShippingHandler = () => {
-        console.log('shipping data');
         axios
-            .put(`http://localhost:8000/api/users/${id}`, user, { withCredentials: true })
+            .put(`http://localhost:8000/api/users/${id}`, 
+            {
+                ...userShipping
+            }, 
+            { withCredentials: true })
             .then((res) => {
                 console.log(res);
             })
@@ -69,9 +91,12 @@ const Profile = () => {
 
     // Handle for editing billing info
     const submitBillingHandler = () => {
-        console.log('billing data');
         axios
-            .put(`http://localhost:8000/api/users/${id}`, user, { withCredentials: true })
+            .put(`http://localhost:8000/api/users/${id}`, 
+            {
+                ...userBilling
+            }, 
+            { withCredentials: true })
             .then((res) => {
                 console.log(res);
             })
@@ -153,9 +178,9 @@ const Profile = () => {
                                     <input
                                         type="text"
                                         name='street'
-                                        value={user.street}
+                                        value={userShipping.street}
                                         className='form-control'
-                                        onChange={handleChange}
+                                        onChange={handleShippingChange}
                                         required
                                     />
                                     <label htmlFor="fullName" className='px-4'>Street</label>
@@ -168,9 +193,9 @@ const Profile = () => {
                                         <input
                                             type="text"
                                             name='city'
-                                            value={user.city}
+                                            value={userShipping.city}
                                             className='form-control'
-                                            onChange={handleChange}
+                                            onChange={handleShippingChange}
                                             required
                                         />
                                         <label htmlFor="fullName" className='px-4'>City</label>
@@ -180,9 +205,9 @@ const Profile = () => {
                                         <input
                                             type="text"
                                             name='state'
-                                            value={user.state}
+                                            value={userShipping.state}
                                             className='form-control'
-                                            onChange={handleChange}
+                                            onChange={handleShippingChange}
                                             required
                                         />
                                         <label htmlFor="fullName" className='px-4'>State</label>
@@ -192,9 +217,9 @@ const Profile = () => {
                                         <input
                                             type="number"
                                             name='zipCode'
-                                            value={user.zipCode}
+                                            value={userShipping.zipCode}
                                             className='form-control'
-                                            onChange={handleChange}
+                                            onChange={handleShippingChange}
                                             required
                                         />
                                         <label htmlFor="fullName" className='px-4'>Zip Code</label>
@@ -205,12 +230,11 @@ const Profile = () => {
                             <div className='row align-items-center'>
                                 <div className='form-floating'>
                                     <input
-                                        type="tel"
+                                        type="number"
                                         name='phoneNumber'
-                                        value={user.phoneNumber}
+                                        value={userShipping.phoneNumber}
                                         className='form-control'
                                         onChange={handleChange}
-                                        pattern='[0-9]{3}-[0-3]{3}-[0-9]{4}'
                                         required
                                     />
                                     <label htmlFor="fullName" className='px-4'>Phone Number</label>
@@ -233,9 +257,9 @@ const Profile = () => {
                                         type="text"
                                         name='fullName'
                                         id='fullName'
-                                        value={user.fullName}
+                                        value={userBilling.fullName}
                                         className='form-control'
-                                        onChange={handleChange}
+                                        onChange={handleBillingchange}
                                         required
                                     />
                                     <label htmlFor="fullName" className='px-4'>Full Name</label>
@@ -248,9 +272,9 @@ const Profile = () => {
                                         type="number"
                                         name='cardNumber'
                                         id='cardNumber'
-                                        value={user.cardNumber}
+                                        value={userBilling.cardNumber}
                                         className='form-control'
-                                        onChange={handleChange}
+                                        onChange={handleBillingchange}
                                         required
                                     />
                                     <label htmlFor="cardNumber" className='px-4'>Card Number</label>
@@ -261,11 +285,10 @@ const Profile = () => {
                                         type="date"
                                         name='expirationDate'
                                         id='expirationDate'
-                                        value={user.expirationDate}
+                                        value={userBilling.expirationDate}
                                         className='form-control'
-                                        onChange={handleChange}
+                                        onChange={handleBillingchange}
                                         required
-                                        style={{}}
                                     />
                                     <label htmlFor="expirationDate" className='px-4'>Card expiration date</label>
                                     {errors.expirationDate && <span className="text-danger">{errors.expirationDate.message}</span>}
