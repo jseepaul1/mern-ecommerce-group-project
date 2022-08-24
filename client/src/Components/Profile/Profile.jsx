@@ -183,7 +183,7 @@ const Profile = () => {
                     <div className='col-5'>
                         <h2>Shipping Information</h2>
                         <form onSubmit={submitShippingHandler}>
-                            <div className=''>
+                            <div>
                                 <div className='row align-items-center'>
                                     <div className='form-floating my-3'>
                                         <input
@@ -299,6 +299,7 @@ const Profile = () => {
                                             value={userBilling.expirationDate}
                                             className='form-control'
                                             onChange={handleBillingchange}
+                                            max='8'
                                             required
                                         />
                                         <label htmlFor="expirationDate" className='px-4'>Card expiration date</label>

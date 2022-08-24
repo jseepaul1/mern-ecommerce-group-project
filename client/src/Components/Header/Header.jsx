@@ -17,7 +17,6 @@ const Header = ({ refreshCart, setRefreshCart }) => {
     axios
       .get("http://localhost:8000/api/user", { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
         setCart(res.data.cart.length);
         setUserId(res.data._id);
