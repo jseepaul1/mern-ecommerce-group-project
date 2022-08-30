@@ -1,104 +1,149 @@
 import "./Checkout.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import groupBy from "lodash.groupby";
+import { Link, useNavigate } from "react-router-dom";
+import { DashSquare } from "react-bootstrap-icons";
+
 import Header from "../Header/Header";
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const [refreshCart, setRefreshCart] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState({});
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [user, setUser] = useState([]);
-  const totalPrice = cartItems.reduce((total, product)=> total + (product.price),0);
-  const [order, setOrder] = useState({
-    items: cartItems,
-    totalPrice: totalPrice,
-  })
 
   // Get logged in user
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/user", { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
-        setCartItems(res.data.cart);
+        setCartItems(groupBy(res.data.cart, "_id"));
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  useEffect(() => {
+    console.log("cartItems - ", cartItems);
+    window.cartItems = cartItems;
+  }, [cartItems]);
+
   // Remove product from cart
-  const removeProductHandle = (idFromBelow) => {
+  const removeProductHandle = (productId) => {
     axios
-        .put(`http://localhost:8000/api/users/removeProductFromCart/${idFromBelow}`, {}, { withCredentials: true })
-        .then((res) => {
-            console.log(res.data);
-            const filteredProducts = cartItems.filter(cartItems => {
-                return cartItems._id !== idFromBelow
-            });
-            setCartItems(filteredProducts);
-            setRefreshCart(true);
-        })
-        .catch((err) => {
-            console.log(err.response.data);
-        })
-}
+      .delete(
+        `http://localhost:8000/api/users/remove-product-from-cart/${productId}`,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setCartItems(groupBy(res.data.cart, "_id"));
+        setRefreshCart(true);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
+
+  useEffect(() => {
+    let totalItems = 0;
+    let totalPrice = 0;
+    for (const [_id, items] of Object.entries(cartItems)) {
+      totalItems += items.length;
+      totalPrice += items.reduce(
+        (totalPrice, item) => totalPrice + item.price,
+        0
+      );
+    }
+    setTotalPrice(totalPrice);
+    setTotalItems(totalItems);
+  }, [cartItems]);
 
   // Create order handler
   const createOrderHandle = () => {
+    const items = Object.entries(cartItems).map(([id, items]) => ({
+      productId: id,
+      price: items[0].price,
+      quantity: items.length,
+    }));
+    console.log("Order POST object - ", {
+      items,
+      totalPrice,
+    });
+
     axios
-      .post("http://localhost:8000/api/orders", 
-      { 
-        order 
-      } ,{ withCredentials: true })
+      .post(
+        "http://localhost:8000/api/orders",
+        {
+          items,
+          totalPrice,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log(res);
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   return (
     <div>
       <Header refreshCart={refreshCart} setRefreshCart={setRefreshCart} />
-      <h1>Checkout Page</h1>
-      <div className="d-flex mt-4">
-        <div className="d-flex">
-          <div className="d-flex justify-content-evenly align-items-center flex-wrap productList checkout-container">
-            {cartItems.map((cartItem) => (
-              <div
-                key={cartItem._id}
-                className="card mb-4 card-container"
-                style={{ marginTop: "2%", flex: "0 0 22%", margin: '10px' }}
-              >
-                <Link
-                  to={`/product/${cartItem._id}`}
-                  style={{ textDecoration: "none", height: "100%" }}
-                >
-                  <div className="image-container">
-                    <img
-                      className="card-img-top mangaCoverImage card-image"
-                      src={cartItem.image}
-                      style={{ padding: "2%", height: "auto" }}
-                      alt="Cardpic"
+      <h2>Shopping Cart</h2>
+      <div className="container mt-6">
+        <div class="row">
+          <div class="column-1">
+            {Object.keys(cartItems).map((_id) => (
+              <div className="checkout-item" key={_id}>
+                <div className="image-checkout">
+                  <img
+                    className="card-image-checkout"
+                    src={cartItems[_id][0].image}
+                    alt="Cardpic"
+                  />
+                </div>
+                <div className="checkout-container">
+                  <Link to={`/product/${_id}`}>
+                    <div>
+                      <h6 className="checkout-product-name">
+                        {cartItems[_id][0].productName}
+                      </h6>
+                    </div>{" "}
+                  </Link>
+                  <div className="checkout-price">
+                    ${cartItems[_id][0].price}
+                  </div>
+                  <div className="total-item">
+                    <span>
+                      x <strong>{cartItems[_id].length}</strong>
+                    </span>
+                  </div>
+                  <div className="remove-button-container">
+                    <DashSquare
+                      size={30}
+                      onClick={() => removeProductHandle(_id)}
                     />
                   </div>
-                  <div className="card-body">
-                    <h2 className="card-title">{cartItem.productName}</h2>
-                    <h4 className="card-title price product-price">${cartItem.price}</h4>
-                  </div>
-                </Link>
-                <button className="btn btn-danger" onClick={() => removeProductHandle(cartItem._id)}>Remove Item</button>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-        <div className="d-flex col-3 mt-5">
-          <div className="">
-            <h4>Subtotal: ({ cartItems.length } items) ${totalPrice}</h4>
-            <button className="btn btn-warning" onClick={createOrderHandle}>Complete Your Order</button>
+          <div class="column-2">
+            <div className="remove-item">
+              <div className="total-price">
+                Subtotal: ({totalItems} items) ${totalPrice}
+              </div>
+              <button className="btn btn-warning" onClick={createOrderHandle}>
+                Complete Your Order
+              </button>
+            </div>
           </div>
         </div>
       </div>

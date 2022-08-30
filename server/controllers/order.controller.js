@@ -1,4 +1,5 @@
 const Order = require("../models/order.model");
+const { deleteCartItemsByUserId } = require("./user.controller");
 require("dotenv").config();
 
 module.exports = {
@@ -24,6 +25,7 @@ module.exports = {
       await deleteCartItemsByUserId(req.user._id);
       res.status(201).json(newOrder);
     } catch (err) {
+      console.log("error -", err)
       res.status(400).json({ message: "error in create order", error: err });
     }
   },

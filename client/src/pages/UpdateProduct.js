@@ -48,7 +48,7 @@ const UpdateProduct = () => {
   };
   return currentProduct ? (
     <>
-    <h2>Edit- {currentProduct.productName}</h2>
+    <h2 className="product-name">Edit- {currentProduct.productName}</h2>
       <ProductForm 
         submitHandler={submitHandler}
         currentProduct={currentProduct}

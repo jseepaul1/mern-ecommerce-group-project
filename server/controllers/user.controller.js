@@ -117,9 +117,8 @@ const getLoggedInUser = async (req, res) => {
 
 const addToCart = async (req, res) => {
   try {
-    const user = jwt.verify(req.cookies.userToken, SECRET);
     const addToCartById = await User.findOneAndUpdate(
-      { _id: user._id },
+      { _id: req.user._id },
       { $push: { cart: req.params.id } },
       { new: true, useFindAndModify: false }
     );
@@ -131,17 +130,53 @@ const addToCart = async (req, res) => {
 
 const removeProductFromCart = async (req, res) => {
   try {
-    const user = jwt.verify(req.cookies.userToken, SECRET);
-    const removingProductFromCart = await User.findOneAndUpdate(
-      { _id: user._id } , 
-      {$pull: { cart: req.params.id }},  
-      { new: true, useFindAndModify: false })
-      res.status(200).json(removingProductFromCart)
+    const currentUser = await User.findOne({
+      _id: req.user._id,
+    }).populate("cart");
+
+    let deleteCounter = 0;
+    const newCart = currentUser.cart.filter((cartItem) => {
+      if (cartItem._id.toString() === req.params.id && deleteCounter === 0) {
+        deleteCounter++;
+        return false;
+      }
+      return true;
+    });
+
+    const updatedUserCart = await User.findByIdAndUpdate(
+      currentUser.id,
+      {
+        $set: {
+          cart: newCart,
+        },
+      },
+      {
+        new: true,
+      }
+    ).populate("cart");
+    res.status(200).json(updatedUserCart);
   } catch (err) {
-    console.log('Error in removing product from cart', err);
-    res.status(400).json({ message:"something went wrong in removing product from cart", error: err });
+    console.log("Error in removing product from cart", err);
+    res.status(400).json({
+      message: "something went wrong in removing product from cart",
+      error: err,
+    });
   }
-}
+};
+
+const deleteCartItemsByUserId = async (userId) => {
+  try {
+    return await User.findByIdAndUpdate(userId, {
+      $set: {
+        cart: [],
+      },
+    });
+  } catch (err) {
+    res
+      .status(400)
+      .json({ message: "error in delete cart items by user id", error: err });
+  }
+};
 
 module.exports = {
   register,
@@ -151,4 +186,5 @@ module.exports = {
   updateUser,
   addToCart,
   removeProductFromCart,
+  deleteCartItemsByUserId,
 };
