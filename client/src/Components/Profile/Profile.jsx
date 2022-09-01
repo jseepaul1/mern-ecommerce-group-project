@@ -5,7 +5,10 @@ import { useParams } from 'react-router-dom';
 
 const Profile = () => {
     const { id } = useParams();
-    const [errors, setErrors] = useState({});
+    const [userErrors, setUserErrors] = useState({});
+    const [userShippingErrors, setUserShippingErrors] = useState({});
+    const [userBillingErrors, setUserBillingErrors] = useState({});
+    const [orders, setOrders] = useState([]);
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
@@ -23,7 +26,8 @@ const Profile = () => {
     const [userBilling, setUserBilling] = useState({
         fullName: '',
         cardNumber: '',
-        expirationDate: '',
+        expirationMonth: '',
+        expirationYear: '',
     });
 
     // Basic user information on change handle
@@ -69,6 +73,19 @@ const Profile = () => {
             });
     }, []);
 
+    // Get current user's orders
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8000/api/orders/user`, { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+                setOrders(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
+
     // Handle for editing main profile data
     const submitProfileHandler = (e) => {
         e.preventDefault();
@@ -79,7 +96,7 @@ const Profile = () => {
             })
             .catch((err) => {
                 console.log(err.response);
-                setErrors(err.data);
+                setUserErrors(err.data);
             })
     };
 
@@ -97,9 +114,8 @@ const Profile = () => {
                 console.log(res);
             })
             .catch((err) => {
-                // console.log(err.response.shippingAddress.street);
-                // setErrors(err.data);
                 console.log('Error while updating shipping handler - ', err);
+                setUserShippingErrors(err.data)
             })
     };
 
@@ -116,9 +132,8 @@ const Profile = () => {
                 console.log(res);
             })
             .catch((err) => {
-                // console.log(err.response.billingInformation.street);
-                // setErrors(err.data);
                 console.log('Error while updating billing handler - ', err);
+                setUserBillingErrors(err.data)
             })
     };
 
@@ -145,7 +160,7 @@ const Profile = () => {
                                             required
                                         />
                                     <label htmlFor="firstName">First Name</label>
-                                    {errors.firstName && <span className="text-danger">{errors.firstName.message}</span>}
+                                    {userErrors.firstName && <span className="text-danger">{userErrors.firstName.message}</span>}
                                     </div>
                                 </div>
                                 <div className='col'>
@@ -160,7 +175,7 @@ const Profile = () => {
                                             required
                                         />
                                         <label htmlFor="lastName">Last Name</label>
-                                        {errors.lastName && <span className="text-danger">{errors.lastName.message}</span>}
+                                        {userErrors.lastName && <span className="text-danger">{userErrors.lastName.message}</span>}
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +191,7 @@ const Profile = () => {
                                         required
                                     />
                                     <label htmlFor="email" className='px-4'>Email</label>
-                                    {errors.email && <span className="text-danger">{errors.email.message}</span>}
+                                    {userErrors.email && <span className="text-danger">{userErrors.email.message}</span>}
                                 </div>
                             </div>
                             <div className='align-items-center mt-4 mb-4'>
@@ -187,11 +202,11 @@ const Profile = () => {
                 </div>
                 <div className='d-flex justify-content-between'>
                     <div className='col-5'>
-                        <h2>Shipping Information</h2>
+                        <h2 className='pb-2'>Shipping Information</h2>
                         <form onSubmit={submitShippingHandler}>
                             <div>
                                 <div className='row align-items-center'>
-                                    <div className='form-floating my-3'>
+                                    <div className='form-floating'>
                                         <input
                                             type="text"
                                             name='street'
@@ -201,12 +216,12 @@ const Profile = () => {
                                             required
                                         />
                                         <label htmlFor="fullName" className='px-4'>Street</label>
-                                        {errors.street && <span className="text-danger">{errors.street.message}</span>}
+                                        {userShippingErrors.street && <span className="text-danger">{userShippingErrors.street.message}</span>}
                                     </div>
                                 </div>
-                                <div className='align-items-center py-2'>
+                                <div className='align-items-center'>
                                     <div className='row'>
-                                        <div className='form-floating col my-3'>
+                                        <div className='form-floating col'>
                                             <input
                                                 type="text"
                                                 name='city'
@@ -216,9 +231,9 @@ const Profile = () => {
                                                 required
                                             />
                                             <label htmlFor="fullName" className='px-4'>City</label>
-                                            {errors.city && <span className="text-danger">{errors.city.message}</span>}
+                                            {userShippingErrors.city && <span className="text-danger">{userShippingErrors.city.message}</span>}
                                         </div>
-                                        <div className='form-floating col my-3'>
+                                        <div className='form-floating col'>
                                             <input
                                                 type="text"
                                                 name='state'
@@ -228,9 +243,9 @@ const Profile = () => {
                                                 required
                                             />
                                             <label htmlFor="fullName" className='px-4'>State</label>
-                                            {errors.state && <span className="text-danger">{errors.state.message}</span>}
+                                            {userShippingErrors.state && <span className="text-danger">{userShippingErrors.state.message}</span>}
                                         </div>
-                                        <div className='form-floating col my-2'>
+                                        <div className='form-floating col'>
                                             <input
                                                 type="number"
                                                 name='zipCode'
@@ -240,7 +255,7 @@ const Profile = () => {
                                                 required
                                             />
                                             <label htmlFor="fullName" className='px-4'>Zip Code</label>
-                                            {errors.zipCode && <span className="text-danger">{errors.zipCode.message}</span>}
+                                            {userShippingErrors.zipCode && <span className="text-danger">{userShippingErrors.zipCode.message}</span>}
                                         </div>
                                     </div>
                                 </div>
@@ -255,7 +270,7 @@ const Profile = () => {
                                             required
                                         />
                                         <label htmlFor="fullName" className='px-4'>Phone Number</label>
-                                        {errors.phoneNumber && <span className="text-danger">{errors.phoneNumber.message}</span>}
+                                        {userShippingErrors.phoneNumber && <span className="text-danger">{userShippingErrors.phoneNumber.message}</span>}
                                     </div>
                                     <div className='align-items-center mt-4 mb-4'>
                                         <button className='btn btn-success'>Submit</button>
@@ -264,55 +279,55 @@ const Profile = () => {
                             </div>
                         </form>
                     </div>
-                    <div className='col-5'>
+                    <div className='col-6'>
                         <h2>Billing Information</h2>
                         <form onSubmit={submitBillingHandler}>
-                            <div>
-                                <div className='d-flex row align-items-center'>
-                                    <div className='form-floating my-3'>
-                                        <input
-                                            type="text"
-                                            name='fullName'
-                                            id='fullName'
-                                            value={userBilling.fullName}
-                                            className='form-control'
-                                            onChange={handleBillingChange}
-                                            required
-                                        />
-                                        <label htmlFor="fullName" className='px-4'>Full Name</label>
-                                        {errors.fullName && <span className="text-danger">{errors.fullName.message}</span>}
+                                <div className='d-flex align-items-center'>
+                                    <div className='row'>
+                                        <div className='form-floating col-auto'>
+                                            <input
+                                                type="text"
+                                                name='fullName'
+                                                id='fullName'
+                                                value={userBilling.fullName}
+                                                className='form-control'
+                                                onChange={handleBillingChange}
+                                                required
+                                            />
+                                            <label htmlFor="fullName" className='px-4'>Full Name</label>
+                                            {userBillingErrors.fullName && <span className="text-danger">{userBillingErrors.fullName.message}</span>}
+                                        </div>
+                                            <div className='form-floating col'>
+                                                <input
+                                                type="number"
+                                                name='expirationMonth'
+                                                id='expirationMonth'
+                                                value={userBilling.expirationMonth}
+                                                className='form-control'
+                                                onChange={handleBillingChange}
+                                                min='1'
+                                                max='12'
+                                                required
+                                            />
+                                                <label htmlFor="expirationMonth" className='px-4'>Expiration Month</label>
+                                                {userBillingErrors.expirationMonth && <span className="text-danger">{userBillingErrors.expirationMonth.message}</span>}
+                                            </div>
+                                            <div className='form-floating col'>
+                                                <input
+                                                    type="number"
+                                                    name='expirationYear'
+                                                    id='expirationYear'
+                                                    value={userBilling.expirationYear}
+                                                    className='form-control'
+                                                    onChange={handleBillingChange}
+                                                    min='22'
+                                                    required
+                                                />
+                                                <label htmlFor="expirationMonth" className='px-4'>Expiration Year</label>
+                                                {userBillingErrors.expirationYear && <span className="text-danger">{userBillingErrors.expirationYear.message}</span>}
+                                            </div>
                                     </div>
                                 </div>
-                                <div className='d-flex row align-items-center'>
-                                    <div className='form-floating my-3'>
-                                        <input
-                                            type="number"
-                                            name='cardNumber'
-                                            id='cardNumber'
-                                            value={userBilling.cardNumber}
-                                            className='form-control'
-                                            onChange={handleBillingChange}
-                                            required
-                                        />
-                                        <label htmlFor="cardNumber" className='px-4'>Card Number</label>
-                                        {errors.cardNumber && <span className="text-danger">{errors.cardNumber.message}</span>}
-                                    </div>
-                                    <div className='d-flex form-floating my-3'>
-                                        <input
-                                            type="date"
-                                            name='expirationDate'
-                                            id='expirationDate'
-                                            value={userBilling.expirationDate}
-                                            className='form-control'
-                                            onChange={handleBillingChange}
-                                            max='8'
-                                            required
-                                        />
-                                        <label htmlFor="expirationDate" className='px-4'>Card expiration date</label>
-                                        {errors.expirationDate && <span className="text-danger">{errors.expirationDate.message}</span>}
-                                    </div>
-                                </div>
-                            </div>
                             <div className='align-items-center mt-4 mb-4'>
                                 <button className='btn btn-success'>Submit</button>
                             </div>

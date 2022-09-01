@@ -140,7 +140,7 @@ const Checkout = () => {
               <div className="total-price">
                 Subtotal: ({totalItems} items) ${totalPrice}
               </div>
-              <button className="btn btn-warning" onClick={createOrderHandle}>
+              <button className="btn btn-warning mt-2" onClick={createOrderHandle}>
                 Complete Your Order
               </button>
             </div>
