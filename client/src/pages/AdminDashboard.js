@@ -61,14 +61,14 @@ const AdminDashboard = () => {
                 <td className="price">${product.price}</td>
                 <td>
                   <Button
-                    class="btn btn-success"
+                    className="btn btn-success"
                     onClick={() => editProduct(product._id)}
                   >
                     Edit
                   </Button>
-                  <span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>{" "}
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>{" "}
                   <Button
-                    class="btn btn-danger"
+                    className="btn btn-danger"
                     onClick={() => deleteProduct(product._id)}
                   >
                     Delete

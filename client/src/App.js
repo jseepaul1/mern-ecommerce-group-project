@@ -10,6 +10,7 @@ import DisplayProduct from "./Components/DisplayProduct/DisplayProduct";
 import ProtectedAdminRoute from "./Components/ProtectedRoute/ProtectedAdminRoute";
 import Checkout from "./Components/Checkout/Checkout";
 import Profile from "./Components/Profile/Profile";
+import UserOrders from "./Components/UserOrders/UserOrders";
 
 // page imports
 import AdminDashboard from "./pages/AdminDashboard";
@@ -92,6 +93,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders/:id"
+            element={
+              <ProtectedRoute>
+                <UserOrders />
               </ProtectedRoute>
             }
           />

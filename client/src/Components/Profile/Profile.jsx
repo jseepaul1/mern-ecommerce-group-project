@@ -73,19 +73,6 @@ const Profile = () => {
             });
     }, []);
 
-    // Get current user's orders
-    useEffect(() => {
-        axios
-            .get(`http://localhost:8000/api/orders/user`, { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                setOrders(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }, [])
-
     // Handle for editing main profile data
     const submitProfileHandler = (e) => {
         e.preventDefault();

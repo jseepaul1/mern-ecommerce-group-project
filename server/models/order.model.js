@@ -8,6 +8,12 @@ const OrderSchema = mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
         },
+        productName: {
+          type: String,
+        },
+        productImage: {
+          type: String,
+        },
         price: {
           type: Number,
           default: 0,
