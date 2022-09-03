@@ -49,6 +49,7 @@ const Checkout = () => {
       });
   };
 
+  // Showing total cost of cart
   useEffect(() => {
     let totalItems = 0;
     let totalPrice = 0;
@@ -67,6 +68,8 @@ const Checkout = () => {
   const createOrderHandle = () => {
     const items = Object.entries(cartItems).map(([id, items]) => ({
       productId: id,
+      productName: items[0].productName,
+      productImage: items[0].image,
       price: items[0].price,
       quantity: items.length,
     }));
@@ -98,8 +101,8 @@ const Checkout = () => {
       <Header refreshCart={refreshCart} setRefreshCart={setRefreshCart} />
       <h2>Shopping Cart</h2>
       <div className="container mt-6">
-        <div class="row">
-          <div class="column-1">
+        <div className="row">
+          <div className="column-1">
             {Object.keys(cartItems).map((_id) => (
               <div className="checkout-item" key={_id}>
                 <div className="image-checkout">
@@ -135,7 +138,7 @@ const Checkout = () => {
               </div>
             ))}
           </div>
-          <div class="column-2">
+          <div className="column-2">
             <div className="remove-item">
               <div className="total-price">
                 Subtotal: ({totalItems} items) ${totalPrice}
