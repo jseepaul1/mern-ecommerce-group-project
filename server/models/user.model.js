@@ -55,9 +55,16 @@ const billingInformationSchema = new mongoose.Schema({
       message: (val) => `${val.value} has to be 16 digits`,
     },
   },
-  expirationDate: {
-    type: Date,
+  expirationMonth: {
+    type: Number,
     required: [true, "Expiration Date is required"],
+    minLength: [1, "There's at least 1 month in the year"],
+    maxLength: [12, "There's only 12 months in a year"],
+  },
+  expirationYear: {
+    type: Number,
+    required: [true, "Expiration Date is required"],
+    minLength: [22, "Use a valid card"],
   },
 });
 

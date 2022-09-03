@@ -75,6 +75,11 @@ const Header = ({ refreshCart, setRefreshCart }) => {
                 <Navbar.Text>Profile</Navbar.Text>
               </Link>
             </div>
+            <div className="mx-3">
+              <Link to={`/orders/${userId}`}>
+                <Navbar.Text>My Orders</Navbar.Text>
+              </Link>
+            </div>
           </Nav>
         </Navbar.Collapse>
         <NavbarCollapse className="justify-content-end">
