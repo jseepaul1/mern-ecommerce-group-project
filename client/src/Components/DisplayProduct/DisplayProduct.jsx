@@ -43,21 +43,22 @@ const DisplayProduct = () => {
     <div>
       <Header refreshCart={refreshCart} setRefreshCart={setRefreshCart} />
       <div className="container">
-        <div className="d-flex display-one-container">
-          <div>
+        <div className="d-flex display-one-container mt-5">
+          <div className="col-auto">
             <img
               className="card-img-top mangaCoverImage display-one-image"
               style={{ width: "50%", height: "auto", boxShadow:"1px 1px 5px 4px #aaaaaa" }}
               src={product.image}
               alt="Cardpic"
             />
-          </div> 
-          <div>
-            <h2>{product.productName}</h2>
-            <h5 className ="price">${product.price}</h5>
-            <h5>{product.category}</h5>
-            <h6>{product.description}</h6>
-            <button className="btn btn-primary" onClick={handleSubmit}>
+          </div>
+          <div className="col-4">
+            <h2 className="my-3">{product.productName}</h2>
+            <h5 className="price my-3">Price: ${product.price}</h5>
+            <h5 className="my-3">Category: {product.category}</h5>
+            <h5 className="my-3">Description: </h5>
+            <h6 className="my-3">{product.description}</h6>
+            <button className="btn btn-primary mt-2" onClick={handleSubmit}>
               {" "}
               Add to cart{" "}
             </button>

@@ -95,11 +95,11 @@ const Dashboard = () => {
       </div>
       <h1 className="container mt-5">
         <div className="d-flex">
-          <div className="filterBar px-5 py-2 me-5">
+          <div className="filterBar px-5 py-2 me-4">
             {filters.map((filter, index) => (
               <h4 key={index} onClick={() => updateCategory(filter)}>
                 <Link
-                  className={`links ${
+                  className={`px-4 links ${
                     category === filter ? "active-link" : ""
                   }`}
                   to={""}
