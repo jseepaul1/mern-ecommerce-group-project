@@ -28,35 +28,33 @@ const UserOrders = () => {
             <div className="container mt-6">
                 <div className="row">
                     {orders.map((order, index) => (
-                        <div className='' key={index}>
-                            <div className='d-flex justify-content-center align-items-center'>
+                        <div key={index}>
+                            <div className='d-flex justify-content-center align-items-center mb-4'>
                                 <h2>Order {index + 1}  | </h2>
                                 <h6>&nbsp;&nbsp;Total Price: ${order.totalPrice}</h6>
                             </div>
+                            <div className='d-flex flex-row flex-wrap justify-content-center'>
                             {order.items.map((product, _id) => (
-                                <div className='d-flex justify-content-evenly align-items-center' key={_id}>
-                                    <div className='card'>
-                                        <div className=''>
-                                            <img
-                                                className=''
-                                                style={{ width: 'auto', height: '120px'}}
-                                                src={product.productImage}
-                                                alt='Cardpic'
-                                            />
-                                        </div>
-                                        <div className=''>
-                                            <div className=''>
-                                                {/* <Link to={`/product/${product._id}`}> */}
+                                    <div className='card mx-4' key={_id}>
+                                        <img
+                                            className='card-img-top'
+                                            style={{ width: 'auto', height: '12rem'}}
+                                            src={product.productImage}
+                                            alt='Cardpic'
+                                        />
+                                        <div className='card-body'>
+                                            <div className='card-title'>
+                                                <Link to={`/product/${product._id}`}>
                                                     <h6>{product.productName}</h6>
-                                                {/* </Link> */}
+                                                </Link>
                                             </div>
-                                            <div className=''>
+                                            <div className='card-text'>
                                                 <h6>${product.price}</h6>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             ))}
+                            </div>
                         </div>
                     ))}
                 </div>
